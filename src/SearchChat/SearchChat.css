@@ -1,0 +1,23 @@
+.Search {
+    background: #F9FBFC;
+    border-radius: 8px;
+    border: 2px solid #202329;
+    margin: 0px;
+    height: 48px;
+    width: 90%;
+    font-size: 24px;
+    text-align: center;
+    font-family: 'Ubuntu';
+    font-weight: 400;
+    color: #1E1E1F;
+  }
+  
+  .Search::placeholder {
+    color: #A5A5A5;
+    font-family: 'Ubuntu';
+    font-weight: 400;
+  }
+  
+  .Search:focus {
+    outline-color: #61DAFA;
+  }

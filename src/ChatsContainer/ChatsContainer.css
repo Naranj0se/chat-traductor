@@ -1,0 +1,12 @@
+.chatsContainer {
+    height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    padding-top: 48px;
+    scroll-snap-type: y mandatory;
+  }
+
+ul {
+    padding: 0;
+    overflow-y: scroll;
+}

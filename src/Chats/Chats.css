@@ -1,0 +1,49 @@
+  .chat-card {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+
+  .chat-card:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+  }
+  
+  .chat-info {
+    flex-grow: 1;
+  }
+  
+  .chat-name {
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .chat-summary {
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #555555;
+  }
+  
+  .unread-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    background-color: #ff0000;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50%;
+  }
+  

@@ -1,0 +1,34 @@
+.message-input {
+    box-sizing: border-box;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    position: fixed;
+    bottom: 0;
+  }
+  
+  .message-input textarea {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Ubuntu';
+    border: 2px solid #202329;
+  }
+  
+  .message-input button {
+    padding: 8px 16px;
+    background-color: #61DAFA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Ubuntu'
+  }
+  
+  .message-input textarea:focus {
+    outline-color: #61DAFA;
+  }
