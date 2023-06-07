@@ -1,12 +1,10 @@
 .message-input {
     box-sizing: border-box;
-    width: 70%;
+    width: 100%;
     display: flex;
     align-items: center;
     padding: 10px;
     background-color: #f0f0f0;
-    position: fixed;
-    bottom: 0;
   }
   
   .message-input textarea {

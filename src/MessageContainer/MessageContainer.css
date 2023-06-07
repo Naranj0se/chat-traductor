@@ -1,5 +1,4 @@
 .messageContainer {
-    height: calc(100vh - 125px);
     background-color: #7898dd;
     display: flex;
     flex-direction: column;
