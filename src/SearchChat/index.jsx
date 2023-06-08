@@ -11,7 +11,7 @@ function SearchChat({searchValue, setSearchValue}) {
   return (
     <input 
     className="Search" 
-    placeholder="Busca tu chat aquí" 
+    placeholder="Buscar" 
     // value= {searchValue}
     // onChange = {onSearchValueChange}
     />

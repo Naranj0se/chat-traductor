@@ -1,11 +1,12 @@
 .Search {
     background: #F9FBFC;
-    border-radius: 8px;
+    border-radius: 5px;
     border: 2px solid #202329;
     margin: 0px;
-    height: 48px;
+    padding: 8px;
+    height: 15px;
     width: 90%;
-    font-size: 24px;
+    font-size: 16px;
     text-align: center;
     font-family: 'Ubuntu';
     font-weight: 400;
