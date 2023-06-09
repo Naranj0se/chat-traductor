@@ -3,9 +3,7 @@
     background-color: #7898dd;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    max-height: 82vh;
+    overflow-y: hidden;
   }
 
 .messageContainer ul {

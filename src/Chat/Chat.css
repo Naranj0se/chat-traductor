@@ -3,4 +3,5 @@
     /* Añadido */
     display: grid;
     grid-template-rows: 70px 1fr auto;
+    max-height: 100vh;
 }
