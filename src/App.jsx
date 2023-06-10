@@ -1,14 +1,13 @@
 import React from "react";
-import { Inbox } from "./components/Inbox";
-import { Chat } from "./components/Chat";
-import { Display } from "./components/Display"
+
+import UserProvider from "./context/UserProvider"
+import AppRouter from "./router"
 
 function App() {
   return (
-  <Display>
-    <Inbox />
-    <Chat />
-  </Display>
+    <UserProvider>
+      <AppRouter />
+    </UserProvider>
   );
 }
 
