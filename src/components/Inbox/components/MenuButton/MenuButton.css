@@ -1,6 +1,7 @@
 .material-symbols-outlined-menu {
-    font-size: 34px;
-    margin: 10px;
+    font-size: 28px;
+    /* margin: 10px 10px 10px 0px; */
+    margin-right: 16px;
     cursor: pointer;
     color: #000000;
 

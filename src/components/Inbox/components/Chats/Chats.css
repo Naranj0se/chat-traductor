@@ -1,3 +1,4 @@
+  
   .chat-card {
     display: flex;
     align-items: center;
@@ -20,18 +21,26 @@
   
   .chat-info {
     flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
   
   .chat-name {
-    margin-bottom: 4px;
     font-size: 16px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin: 0
   }
   
   .chat-summary {
-    margin-bottom: 4px;
     font-size: 14px;
     color: #555555;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-top: 8px;
   }
   
   .unread-count {
