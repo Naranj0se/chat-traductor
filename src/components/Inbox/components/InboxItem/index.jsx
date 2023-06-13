@@ -1,7 +1,7 @@
 import React from "react";
 import "./Chats.css"
 
-function Chats({ username, summary, count, avatarURL }) {
+export default function Inbox({ username, summary, count, avatarURL }) {
 
     return (
         <li className="chat-card">
@@ -14,5 +14,3 @@ function Chats({ username, summary, count, avatarURL }) {
         </li>
     );
   }
-  
-export { Chats }

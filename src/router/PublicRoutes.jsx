@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import ChatContext from '../context/ChatContext'
+import UserContext from '../context/userContext/UserContext'
 
 function PublicRoute ({ children }) {
-    const { isLogged } = useContext(ChatContext)
+    const { isLogged } = useContext(UserContext)
     
     return (!isLogged) ? children : <Navigate to="/" />
 }

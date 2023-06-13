@@ -1,6 +1,6 @@
 import React from "react";
 
-import UserProvider from "./context/UserProvider"
+import UserProvider from "./context/userContext/UserProvider"
 import AppRouter from "./router"
 
 function App() {

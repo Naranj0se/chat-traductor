@@ -10,23 +10,7 @@ function Chat(){
   return (
     <div className="chat">
       <ChatHeader/>
-      {/* <MessageContainer>
-
-        {messages.map((message) => {
-
-          if(message.id_user === currentUserId){
-            return <OwnMessage key={message.id_message} {...message} />
-          }
-          else{
-            return <OtherMessage key={message.id_message} {...message}/>
-          }
-
-          
-
-        })}
-        
-      </MessageContainer> */}
-      <MessageContainer />
+            <MessageContainer />
       <ChatInput/>
     </div>
   );

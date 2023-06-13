@@ -3,7 +3,7 @@ import './MessageContainer.css'
 import { OtherMessage, OwnMessage } from "../Message";
 
 function MessageContainer(props) {
-  
+
   const currentUserId = 1;
 
   const messages = [
@@ -112,7 +112,6 @@ function MessageContainer(props) {
       message: "Bergas negras",
       sender: "Mikael"
     },
-
   ]
 
   return (
