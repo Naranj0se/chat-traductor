@@ -39,7 +39,7 @@ function MessageContainer(props) {
       id_message: 5,
       id_user: 1,
       created_at: "5:00",
-      message: "Bergas negras",
+      message: "Mensaje de prueba 😋",
       sender: "Mikael"
     },
     {
@@ -74,7 +74,7 @@ function MessageContainer(props) {
       id_message: 10,
       id_user: 1,
       created_at: "5:00",
-      message: "Bergas negras",
+      message: "Mensaje de prueba 😋",
       sender: "Mikael"
     },
     {
@@ -109,7 +109,7 @@ function MessageContainer(props) {
       id_message: 15,
       id_user: 1,
       created_at: "5:00",
-      message: "Bergas negras",
+      message: "Mensaje de prueba 😋",
       sender: "Mikael"
     },
   ]

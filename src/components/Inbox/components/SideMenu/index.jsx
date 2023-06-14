@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import "./SideMenu.css"
 
-import UserContext from '../../../context/userContext/UserContext';
+import UserContext from '../../../../context/userContext/UserContext';
 
-function SideMenu({ isMenuOpen, toggleMenu }) {
+function SideMenu({ isMenuOpen, toggleMenu, toggleContacts }) {
 
   const user = useContext(UserContext);
   const { user_data } = user;
@@ -29,7 +29,7 @@ function SideMenu({ isMenuOpen, toggleMenu }) {
           <div className="user-name">{userName}</div>
         </div>
         <div className="menu-options">
-          <div className='option hvr-skew-forward'>
+          <div className='option hvr-skew-forward' onClick={() => {toggleContacts(); toggleMenu();}}>
             <span className="material-symbols-outlined MenuIcon">
               contacts
             </span>
