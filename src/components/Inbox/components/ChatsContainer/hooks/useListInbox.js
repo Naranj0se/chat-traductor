@@ -4,7 +4,7 @@ function useListInbox() {
     const [ listInbox, setListInbox ] = useState([])
 
     useEffect(()=> {
-      
+      setListInbox(provitionalsChats);
     }, [])
 
     const provitionalsChats = [
@@ -32,9 +32,10 @@ function useListInbox() {
           count: 5,
           avatarURL: "/naranjo.jpg"
         },  
+        
       ]
 
-    return { provitionalsChats }
+    return { listInbox }
 }
 
 export default useListInbox

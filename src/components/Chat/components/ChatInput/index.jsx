@@ -8,8 +8,8 @@ function ChatInput() {
     <div className="message-input">
       <TextareaAutosize maxRows={10}/>
       {/* <button>Enviar</button> */}
-      <button>
-        <span class="material-symbols-outlined material-symbols-outlined-send">
+      <button className="hvr-shrink">
+        <span className="material-symbols-outlined material-symbols-outlined-send">
         send
         </span>
       </button>
