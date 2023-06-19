@@ -7,19 +7,10 @@
   function Contacts({ isContactsOpen, toggleContacts }) {
   
     const user = useContext(UserContext);
-    const { user_data } = user;
+    const { user: {user_data} } = user;
     const { name, avatarURL } = user_data;
   
-  
-    // Datos del usuario:
-    const userPhoto = avatarURL;
-    const userName = name;
-  
-    // const handleLogout = () => {
-    //   // Lógica para cerrar sesión (puede variar según tu implementación)
-    //   
-    //   onLogout();
-    // };
+
   
     return (
       <div className={`contacts ${isContactsOpen ? 'open' : ''}`}>

@@ -6,13 +6,8 @@ import UserContext from '../../../../context/userContext/UserContext';
 function SideMenu({ isMenuOpen, toggleMenu, toggleContacts }) {
 
   const user = useContext(UserContext);
-  const { user_data } = user;
-  const { name, avatarURL } = user_data;
-
-
-  // Datos del usuario:
-  const userPhoto = avatarURL;
-  const userName = name;
+  const { user: { user_data } } = user;
+  const { displayName, photo_url } = user_data;
 
   // const handleLogout = () => {
   //   // Lógica para cerrar sesión (puede variar según tu implementación)
@@ -25,8 +20,8 @@ function SideMenu({ isMenuOpen, toggleMenu, toggleContacts }) {
       <div className="menu-background" onClick={toggleMenu}></div>
       <div className="menu-content">
         <div className="user-profile">
-          <div className="user-photo hvr-grow" style={{ backgroundImage: `url(${userPhoto})` }}></div>
-          <div className="user-name">{userName}</div>
+          <div className="user-photo hvr-grow" style={{ backgroundImage: `url(${photo_url})` }}></div>
+          <div className="user-name">{displayName}</div>
         </div>
         <div className="menu-options">
           <div className='option hvr-skew-forward' onClick={() => {toggleContacts(); toggleMenu();}}>

@@ -13,6 +13,8 @@ code {
     monospace;
 }
 
+input { font-family: 'Segoe UI' }
+
 .material-symbols-outlined {
   font-variation-settings:
   'FILL' 0,

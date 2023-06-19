@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ChatHeader } from "./components/ChatHeader";
 import { MessageContainer } from "./components/MessageContainer";
 import { ChatInput } from "./components/ChatInput";
@@ -7,11 +7,13 @@ import "./Chat.css"
 
 function Chat(){
 
+  const [messages, setMessages] = useState([])
+
   return (
     <div className="chat">
       <ChatHeader/>
-            <MessageContainer />
-      <ChatInput/>
+      <MessageContainer messages={messages} setMessages={setMessages} />
+      <ChatInput setMessages={setMessages}/>
     </div>
   );
 };

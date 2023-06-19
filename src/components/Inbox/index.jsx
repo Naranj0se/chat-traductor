@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
 import { SearchChat } from "./components/SearchChat";
 import { InboxHeader } from "./components/InboxHeader";
@@ -10,18 +10,13 @@ import { Contacts } from "./components/Contacts";
 import './Inbox.css'
 
 function Inbox() {
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isContactsOpen, setIsContactsOpen] = useState(false);
+  
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const toggleContacts = () => {
-    setIsContactsOpen(!isContactsOpen);
-  };
-
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const toggleContacts = () => setIsContactsOpen(!isContactsOpen)
+  
   return (
     <section className='inbox'>
       <SideMenu toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} toggleContacts={toggleContacts}/>

@@ -1,17 +1,16 @@
 import { useState, useEffect, useContext } from "react"
-import UserContext from "../../../../../context/userContext"
-import socket from '../../../../../helpers/socket'
+import UserContext from "../../../context/userContext/UserContext"
+import socket from '../../../helpers/socket'
 
 function useListInbox() {
     const [ listInbox, setListInbox ] = useState([])
     const [ currentChat, setCurrentChat ] = useState(null)
 
-    const { user } = useContext(UserContext)
-    const { user_data } = user
-    const { user_id } = user_data
+    const { user: { user_data } } = useContext(UserContext)
+    const { id_user } = user_data
 
     useEffect(()=> {
-      socket.emit('sending_initial_info', user_id)
+      socket.emit('sending_initial_info', id_user)
       socket.on('sending_initial_info', res => setListInbox(res))
     }, [])
 

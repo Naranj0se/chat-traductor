@@ -1,20 +1,22 @@
 import UserContext from "./UserContext"
+import { useState } from "react"
 
 const UserData = {
     isLogged: true,
     user_data: {
-        user_id: "0VEBC8hSRoVwU0vv8dXb",
+        id_user: "1",
         username: "mycahfrn",
-        name: "Mikael Fernandez",
-        avatarURL: "/naranjo.jpg",
+        displayName: "Mikael Fernandez",
+        photo_url: "https://www.serebii.net/dungeonrescueteamdx/pokemon/474.png",
         isPremium: true
-    },
-    current_chat: null
+    }
 }
 
 const UserProvider = ({ children }) => {
+    const [user, setUser] = useState(UserData)
+
     return(
-        <UserContext.Provider value={UserData}>
+        <UserContext.Provider value={{user, setUser}}>
             { children }
         </UserContext.Provider>
     )
