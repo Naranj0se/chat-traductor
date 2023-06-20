@@ -1,4 +1,5 @@
+import { Login } from "../components/Auth/Login"
 
 export default function AuthPage() {
-    return(<h1>AuthPages...</h1>)
+    return(<Login />)
 }

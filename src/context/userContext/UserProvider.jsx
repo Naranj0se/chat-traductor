@@ -2,7 +2,7 @@ import UserContext from "./UserContext"
 import { useState } from "react"
 
 const UserData = {
-    isLogged: true,
+    isLogged: false,
     user_data: {
         id_user: "1",
         username: "mycahfrn",
