@@ -1,4 +1,5 @@
 .login-container {
+    position: absolute;
     box-sizing: border-box;
     max-width: 348px;
     margin: 0 auto;
@@ -10,7 +11,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 10;
   }
+
+  .login {
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 10;
+  }
+  
+  .login.show {
+    opacity: 1;
+    z-index: 10;
+}
   
   .login-container h2 {
     text-align: center;
@@ -30,19 +43,33 @@
   }
   
   .login-container input[type="email"],
-  .login-container input[type="password"] {
+  .login-container input[type="password"],
+  .login-container input[type="text"] {
     background: #F9FBFC;
     border-radius: 5px;
     border: 2px solid #202329;
     margin: 0px;
     padding: 8px;
     height: 15px;
-    width: 90%;
+    width: 92%;
     font-size: 16px;
     text-align:start;
     font-family: 'Ubuntu';
     font-weight: 400;
     color: #1E1E1F;
+    margin-bottom: 14px;
+  }
+
+  .full-name{
+    display: flex;
+  }
+
+  #nombre, #apellido {
+    width: 100px;
+  }
+
+  #nombre{
+    margin-right: 10px;
   }
 
   .login-container input::placeholder {
@@ -77,15 +104,79 @@
     margin-top: 10px;
     text-align: center;
   }
-  
-  .login-container .additional-options a {
+
+  .toggle-register{
+    cursor: pointer;
+    text-decoration: underline;
     margin: 0 5px;
     color: #666;
     font-size: 18px;
   }
-  
-  .login-container .additional-options a:hover {
+
+  .toggle-register:hover {
     color: #000;
     text-decoration: underline;
   }
+
   
+  .select-input {
+    background: #F9FBFC;
+  border-radius: 5px;
+  border: 2px solid #202329;
+  margin: 0;
+  padding: 2px;
+  height: 35px;
+  width: 100%;
+  font-size: 14px;
+  text-align: start;
+  font-family: 'Ubuntu';
+  font-weight: 400;
+  color: #1E1E1F;
+  margin-bottom: 14px;
+}
+
+.Auth {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.Auth-bg {
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+}
+
+.register-background {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: opacity 1s ease;
+  display: flex;
+  
+}
+.register-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.register-card {
+  position: absolute;
+}
+
+.register {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 5;
+}
+
+.register.show {
+  opacity: 1;
+  z-index: 15;
+}

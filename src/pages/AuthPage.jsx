@@ -1,5 +1,6 @@
-import { Login } from "../components/Auth/Login"
+import { Auth } from "../components/Auth/"
+import { Register } from "../components/Auth/Register"
 
 export default function AuthPage() {
-    return(<Login />)
+    return(<Auth />)
 }

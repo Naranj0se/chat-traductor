@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./Login.css"
+import "../Auth.css"
 
-const Login = () => {
+const Login = ({ onCreateAccount , show }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +21,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className={`login-container login ${(!show) ? 'show' : ''}`}>  
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -47,7 +47,7 @@ const Login = () => {
       </form>
       <div className="additional-options">
         {/* <a href="#">Forgot Password?</a> */}
-        <a className="hvr-skew-forward" href="#">Crear una cuenta</a>
+        <a className="toggle-register hvr-skew-forward" onClick={onCreateAccount}>Crear una cuenta</a>
       </div>
     </div>
   );
