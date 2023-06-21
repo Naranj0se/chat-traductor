@@ -3,13 +3,7 @@ import { useState } from "react"
 
 const UserData = {
     isLogged: false,
-    user_data: {
-        id_user: "1",
-        username: "mycahfrn",
-        displayName: "Mikael Fernandez",
-        photo_url: "https://www.serebii.net/dungeonrescueteamdx/pokemon/474.png",
-        isPremium: true
-    }
+    user_data: null
 }
 
 const UserProvider = ({ children }) => {

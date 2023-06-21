@@ -9,7 +9,7 @@ import UserContext from "../../../../context/userContext/UserContext";
 function ChatInput({setMessages}) {
 
   const { currentChat: { id_room } } = useContext(ChatContext)
-  const { user: { user_data: { id_user } } } = useContext(UserContext)
+  const { user: { user_data: { id } } } = useContext(UserContext)
 
   const [message, setMessage] = useState("")
 
@@ -19,10 +19,10 @@ function ChatInput({setMessages}) {
     const body = {
       id_room,
       message,
-      id_user
+      id_user: id
     }
 
-    const newMessage = { message, id_user }
+    const newMessage = { message, id_room, id_user: id }
 
     setMessages(messages => [...messages, newMessage])
 

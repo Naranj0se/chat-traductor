@@ -7,7 +7,7 @@ import socket from '../../../../helpers/socket';
 import { useState } from 'react';
 
 function MessageContainer({ messages, setMessages }) {
-  const { user: { user_data: { id_user } } } = useContext(UserContext)
+  const { user: { user_data: { id } } } = useContext(UserContext)
   const { currentChat } = useContext(ChatContext)
   const { pointer, id_room } = currentChat 
 
@@ -25,7 +25,7 @@ function MessageContainer({ messages, setMessages }) {
       <ul>
         {messages.map((message) => {
 
-          if(message.id_user== id_user){
+          if(message.id_user== id){
             return <OwnMessage key={message.id_message} {...message} />
           }
           else{

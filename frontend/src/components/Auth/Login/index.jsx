@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../Auth.css"
+import socket from "../../../helpers/socket"
+import UserContext from "../../../context/userContext/UserContext";
+
 
 const Login = ({ onCreateAccount , show }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setUser } = useContext(UserContext)
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
+
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -15,20 +21,29 @@ const Login = ({ onCreateAccount , show }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const body = { username: email, password }
     // Aquí puedes realizar la lógica de autenticación o enviar los datos al servidor
-    console.log("Email:", email);
-    console.log("Password:", password);
+    socket.emit('auth:login', body)
+    socket.on('auth:login', body => {
+      if(body.status === "ok") {
+        setUser({
+          isLogged: true,
+          user_data: body.user
+        })
+      }
+    })
   };
+
 
   return (
     <div className={`login-container login ${(!show) ? 'show' : ''}`}>  
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Email:</label>
+          <label>Nombre de Usuario:</label>
           <input
-            placeholder="ejemplo@gmail.com"
-            type="email"
+            placeholder="JohnDoe"
+            type="text"
             value={email}
             onChange={handleEmailChange}
             required
