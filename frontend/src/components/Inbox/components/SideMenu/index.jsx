@@ -6,14 +6,17 @@ import UserContext from '../../../../context/userContext/UserContext';
 function SideMenu({ isMenuOpen, toggleMenu, toggleContacts }) {
 
   const user = useContext(UserContext);
-  const { user: { user_data } } = user;
+  const { user: { user_data }, setUser } = user;
   const { displayName, photo_url } = user_data;
 
-  // const handleLogout = () => {
-  //   // Lógica para cerrar sesión (puede variar según tu implementación)
-  //   
-  //   onLogout();
-  // };
+  const handleLogout = () => {
+     // Lógica para cerrar sesión (puede variar según tu implementación)
+     localStorage.clear() 
+     setUser({
+        isLogged: false,
+        user_data: null
+     })
+  };
 
   return (
     <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
@@ -36,7 +39,7 @@ function SideMenu({ isMenuOpen, toggleMenu, toggleContacts }) {
             </span>
             <span className='MenuText'>Crear grupo</span>
           </div>
-          <div className='option logout hvr-skew-forward'>
+          <div className='option logout hvr-skew-forward' onClick={handleLogout}>
             <span className="material-symbols-outlined MenuIcon">
             logout
             </span>

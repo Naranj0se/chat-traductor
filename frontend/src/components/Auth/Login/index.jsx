@@ -26,6 +26,9 @@ const Login = ({ onCreateAccount , show }) => {
     socket.emit('auth:login', body)
     socket.on('auth:login', body => {
       if(body.status === "ok") {
+        localStorage.setItem('isLogged', true)
+        localStorage.setItem('user_data', JSON.stringify(body.user))
+
         setUser({
           isLogged: true,
           user_data: body.user

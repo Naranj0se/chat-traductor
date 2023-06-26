@@ -25,4 +25,8 @@ function LoginAuthQuery(username) {
     return `SELECT * FROM users WHERE username="${username}"`
 }
 
+function UpdatedLastestMessage(body) {
+    
+}
+
 export { getInboxChatsByIdQuery, getMessagesByIdRoomQuery, insertMessageQuery, LoginAuthQuery }

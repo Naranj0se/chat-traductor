@@ -2,8 +2,8 @@ import UserContext from "./UserContext"
 import { useState } from "react"
 
 const UserData = {
-    isLogged: false,
-    user_data: null
+    isLogged: Boolean(localStorage.getItem('isLogged')) || false,
+    user_data: JSON.parse(localStorage.getItem('user_data')) || null
 }
 
 const UserProvider = ({ children }) => {

@@ -48,3 +48,12 @@ export const LoginAuth = async body => {
         console.log(error)
     }
 }
+
+export const updatedLastestMessage = async body => {
+    try {
+        const { id_user, id_message } = body
+        const res = await pool.query('UPDATE ')
+    } catch (error) {
+        
+    }
+} 

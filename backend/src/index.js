@@ -42,4 +42,8 @@ io.on('connection', socket => {
       const res = await LoginAuth(body)
       socket.emit('auth:login', res)
     })
+
+    socket.on('message:read', async body => {
+      
+    })
 })
