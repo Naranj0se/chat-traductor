@@ -12,9 +12,30 @@ function useListInbox() {
     useEffect(()=> {
       socket.emit('sending_initial_info', id)
       socket.on('sending_initial_info', res => setListInbox(res))
+      socket.on('client_message', new_msg => {
+        const updatedListBox = listInbox.map(msg => {
+          if(new_msg.id_room === msg.id_room) {
+            let updatedInbox = ({...msg, message: new_msg.message, id_message: new_msg.id})
+            
+            if(!(id === new_msg.id_user)) updatedInbox.counter = msg.counter + 1
+        
+            return updatedInbox
+          }
+          
+          return msg
+        })
+        setListInbox(updatedListBox)
+      })
     }, [])
 
-    return { listInbox, setCurrentChat }
+    function updatedCounted(id_room) {
+      const newChat = listInbox.map(inbox => {
+        return inbox.id_room === id_room ? ({...inbox, counter: 0}) : inbox
+      })
+      setListInbox(newChat)
+    }
+
+    return { listInbox, setCurrentChat, updatedCounted }
 }
 
 export default useListInbox

@@ -1,7 +1,7 @@
 import express from 'express'
 import { createServer } from 'http'
 import { Server as SocketServer } from 'socket.io'
-import { getInboxChatsById, getMessagesForIdRoom, AddMessage, LoginAuth } from './controllers/Inbox.js'
+import { getInboxChatsById, getMessagesForIdRoom, AddMessage, LoginAuth, updatedLastestMessage } from './controllers/Inbox.js'
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -31,10 +31,9 @@ io.on('connection', socket => {
 
     socket.on('client_message', async body => {
       const { id_room, message, id_user } = body
-      const current_timestamp = new Date().getTime()
-      const res = await AddMessage({id_room, message, id_user, current_timestamp}) 
+      const res = await AddMessage({id_room, message, id_user})
+      const new_message = res[0]
 
-      const new_message = { ...body, res }
       socket.to(id_room).emit('client_message', new_message)
     })
 
@@ -44,6 +43,6 @@ io.on('connection', socket => {
     })
 
     socket.on('message:read', async body => {
-      
+      const res = await updatedLastestMessage(body)
     })
 })

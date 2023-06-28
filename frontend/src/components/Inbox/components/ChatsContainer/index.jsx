@@ -5,12 +5,12 @@ import './ChatsContainer.css';
 
 function ChatsContainer(props) {
 
-  const { listInbox, setCurrentChat } = useListInbox()  
+  const { listInbox, setCurrentChat, updatedCounted } = useListInbox()  
 
   return (
     <section className='chatsContainer'>
       <ul>
-        {listInbox.map( chat => <InboxItem key={chat.id_room} {...chat} setCurrentChat={setCurrentChat}/>)}
+        {listInbox.map( chat => <InboxItem key={chat.id_room} {...chat} updatedCounted={updatedCounted}setCurrentChat={setCurrentChat}/>)}
       </ul>
     </section>
   );

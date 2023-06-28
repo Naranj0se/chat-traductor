@@ -2,10 +2,14 @@ import React from "react";
 import "./Chats.css"
 import { useContext } from "react";
 import ChatContext from "../../../../context/chatContext/ChatContext";
+import UserContext from '../../../../context/userContext/UserContext'
 
-export default function Inbox({ username, id_room, counter, photo_url, displayName, message }) {
+import Socket from '../../../../helpers/socket' 
+
+export default function Inbox({ username, id_room, counter, photo_url, displayName, message, id_message, updatedCounted }) {
 
     const { setCurrentChat } = useContext(ChatContext)
+    const { user: {user_data: {id}}} = useContext(UserContext)  
 
     function handleClick() {
       setCurrentChat({
@@ -15,6 +19,13 @@ export default function Inbox({ username, id_room, counter, photo_url, displayNa
         username,
         photo_url
       })
+
+      if(counter) {
+        const body = {id_message, id_user: id, id_room}
+        Socket.emit('message:read', body)
+        updatedCounted(id_room)
+      }
+
     }
 
     return (

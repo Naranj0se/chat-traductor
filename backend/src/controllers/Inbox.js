@@ -1,5 +1,5 @@
 import { pool } from "../db.js"
-import { getInboxChatsByIdQuery, getMessagesByIdRoomQuery, insertMessageQuery, LoginAuthQuery } from "../querys.js"
+import { getInboxChatsByIdQuery, getMessagesByIdRoomQuery, insertMessageQuery, LoginAuthQuery, UpdatedLastestMessageQuery } from "../querys.js"
 
 export const getInboxChatsById = async id => {
     try {
@@ -26,9 +26,10 @@ export const getMessagesForIdRoom = async id => {
 export const AddMessage = async body => {
     try {
         const res = await pool.query(insertMessageQuery(body))
-        console.log(res)
+        const lastID = res[0].insertId
+        const message = await pool.query(`SELECT * FROM messages WHERE id = ${lastID}`)
 
-        return ({status: "ok", message: "Añadido exitosamente"})
+        return message[0]
     } catch (error) {
         console.log(error)
     }
@@ -51,9 +52,10 @@ export const LoginAuth = async body => {
 
 export const updatedLastestMessage = async body => {
     try {
-        const { id_user, id_message } = body
-        const res = await pool.query('UPDATE ')
+        const res = await pool.query(UpdatedLastestMessageQuery(body))
+
+        return ({status: "ok", message: "Done"})
     } catch (error) {
-        
+        console.log(error)
     }
 } 

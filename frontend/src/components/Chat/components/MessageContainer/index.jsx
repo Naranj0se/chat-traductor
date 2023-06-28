@@ -16,7 +16,9 @@ function MessageContainer({ messages, setMessages }) {
       socket.emit('loading_message', id_room)
       socket.on('loading_message', messages => setMessages(messages))
 
-      socket.on('client_message', msg => setMessages(messages => [...messages, msg]))
+      socket.on('client_message', msg => {
+        setMessages(messages => [...messages, msg])
+      })
     }
   }, [id_room]) 
 
