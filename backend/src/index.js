@@ -6,35 +6,32 @@ import { getInboxChatsById, getMessagesForIdRoom, AddMessage, LoginAuth, updated
 const app = express()
 const port = process.env.PORT || 4000
 
-app.get('/api/hola', function (req, res) {
-  return res.status(200).send("Hello World!");
-});
-
-const server = createServer(app)
+const server = createServer(app).listen(port)
 const io = new SocketServer(server, { cors: { origin: "*"}})
 
-io.listen(port);
 
 io.on('connection', socket => {
 
-    socket.on('sending_initial_info', async id => {
+    socket.on('inbox:initial_load', async id => {
       const res = await getInboxChatsById(id)
       const rooms = res.map(r => r.id_room)
+
       socket.join(rooms)
-      socket.emit('sending_initial_info', res)
+      socket.emit('inbox:initial_load', res)
     })
 
-    socket.on('loading_message', async id_room => {
+    socket.on('messages:getMessagesByIdRoom', async id_room => {
       const res = await getMessagesForIdRoom(id_room)
-      socket.emit('loading_message', res)
+      socket.emit('messages:getMessagesByIdRoom', res)
     })
 
-    socket.on('client_message', async body => {
+    socket.on('messages:clientSendMessage', async body => {
       const { id_room, message, id_user } = body
       const res = await AddMessage({id_room, message, id_user})
       const new_message = res[0]
-
-      socket.to(id_room).emit('client_message', new_message)
+      
+      socket.emit("messages:clientSendMessage", new_message)
+      socket.to(id_room).emit("messages:clientSendMessage", new_message)
     })
 
     socket.on('auth:login', async body => {
@@ -42,7 +39,12 @@ io.on('connection', socket => {
       socket.emit('auth:login', res)
     })
 
-    socket.on('message:read', async body => {
+    socket.on('messages:readInbox', async body => {
       const res = await updatedLastestMessage(body)
+      const { id_room } = body
+
+      
+      socket.emit("messages:readInbox", id_room)
+      socket.to(id_room).emit("messages:readInbox", id_room)
     })
 })

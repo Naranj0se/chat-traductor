@@ -1,9 +1,9 @@
-import { useEffect, useState, useContext } from 'react';
+import { useState } from 'react';
 
 import { SearchChat } from "./components/SearchChat";
 import { InboxHeader } from "./components/InboxHeader";
 import { MenuButton } from "./components/MenuButton";
-import { ChatsContainer } from "./components/ChatsContainer";
+import ListInbox from "./components/ListInbox";
 import { SideMenu } from './components/SideMenu';
 import { Contacts } from "./components/Contacts";
 
@@ -25,9 +25,7 @@ function Inbox() {
         <MenuButton toggleMenu={toggleMenu}/>
         <SearchChat />
       </InboxHeader>
-      <ChatsContainer>
-        
-      </ChatsContainer>
+      <ListInbox />
     </section>
   );
 }

@@ -1,21 +1,22 @@
 import React, {useContext} from 'react';
 import "./SideMenu.css"
 
-import UserContext from '../../../../context/userContext/UserContext';
+import { UserContext, UserDispatchContext } from '../../../../store/context/user/UserContext';
 
 function SideMenu({ isMenuOpen, toggleMenu, toggleContacts }) {
 
-  const user = useContext(UserContext);
-  const { user: { user_data }, setUser } = user;
+  const { user_data } = useContext(UserContext)
+  const setUser = useContext(UserDispatchContext)
   const { displayName, photo_url } = user_data;
 
   const handleLogout = () => {
-     // Lógica para cerrar sesión (puede variar según tu implementación)
-     localStorage.clear() 
-     setUser({
-        isLogged: false,
-        user_data: null
+
+    setUser({
+      isLogged: false,
+      user_data: null
      })
+
+    localStorage.clear()
   };
 
   return (

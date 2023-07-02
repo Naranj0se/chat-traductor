@@ -1,15 +1,16 @@
-import React, { useState, useContext } from "react";
-import "../Auth.css"
+import { useState, useContext } from "react"
 import socket from "../../../helpers/socket"
-import UserContext from "../../../context/userContext/UserContext";
 
+import { UserDispatchContext } from "../../../store/context/user/UserContext"
+
+import "../Auth.css"
 
 const Login = ({ onCreateAccount , show }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setUser } = useContext(UserContext)
-
+  const setUser = useContext(UserDispatchContext)
+  
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -26,13 +27,12 @@ const Login = ({ onCreateAccount , show }) => {
     socket.emit('auth:login', body)
     socket.on('auth:login', body => {
       if(body.status === "ok") {
-        localStorage.setItem('isLogged', true)
-        localStorage.setItem('user_data', JSON.stringify(body.user))
-
         setUser({
           isLogged: true,
           user_data: body.user
         })
+        localStorage.setItem('isLogged', true)
+        localStorage.setItem('user_data', JSON.stringify(body.user))
       }
     })
   };

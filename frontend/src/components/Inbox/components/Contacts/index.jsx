@@ -1,17 +1,16 @@
   import React, {useContext} from 'react';
-  import "./Contacts.css"
   
   import { ContactsContainer } from "./ContactsContainer/ContactsContainer"
-  import UserContext from '../../../../context/userContext/UserContext';
-  
+  import { UserContext } from '../../../../store/context/user/UserContext'
+
+  import "./Contacts.css"
+
+
   function Contacts({ isContactsOpen, toggleContacts }) {
   
-    const user = useContext(UserContext);
-    const { user: {user_data} } = user;
-    const { name, avatarURL } = user_data;
-  
+    const { user_data } = useContext(UserContext)
+    const { name, avatarURL } = user_data
 
-  
     return (
       <div className={`contacts ${isContactsOpen ? 'open' : ''}`}>
         <div className="menu-background" onClick={toggleContacts}></div>

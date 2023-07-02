@@ -1,15 +1,14 @@
-import React from "react";
+import { useContext } from "react"
+import { InboxContext } from "../../../../store/context/inbox/inboxContext"
+
 import "./ChatHeader.css"
-import ChatContext from "../../../../context/chatContext/ChatContext";
-import { useContext } from "react";
 
 function ChatHeader() {
-
-  const { currentChat: { displayName } } = useContext(ChatContext)
+  const { Pointer } = useContext(InboxContext)
 
   return (
     <div className="chat-header">
-      <h2>{displayName ? displayName : ""}</h2>
+      <h2>{Pointer ? Pointer?.displayName : ""}</h2>
     </div>
   );
 };

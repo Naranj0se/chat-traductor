@@ -1,35 +1,37 @@
-import React from "react";
+import { useContext } from "react"
+
+import socket from "../../../../helpers/socket"
+
+import { UserContext } from "../../../../store/context/user/UserContext"
+import { InboxDispatchContext, InboxContext } from "../../../../store/context/inbox/inboxContext"
+
+import { selectedInbox } from "../../../../store/dispatch/InboxDispatch"
+
+
 import "./Chats.css"
-import { useContext } from "react";
-import ChatContext from "../../../../context/chatContext/ChatContext";
-import UserContext from '../../../../context/userContext/UserContext'
 
-import Socket from '../../../../helpers/socket' 
-
-export default function Inbox({ username, id_room, counter, photo_url, displayName, message, id_message, updatedCounted }) {
-
-    const { setCurrentChat } = useContext(ChatContext)
-    const { user: {user_data: {id}}} = useContext(UserContext)  
-
+export default function InboxItem(props) {
+    const { displayName, photo_url, id_room, message, counter, id_message } = props
+    
+    const { current_id_room } = useContext(InboxContext)
+    const { user_data: { id }} = useContext(UserContext)
+    
+    const InboxDispatch = useContext(InboxDispatchContext)
+    
     function handleClick() {
-      setCurrentChat({
-        pointer: true,
-        displayName,
-        id_room,
-        username,
-        photo_url
-      })
 
       if(counter) {
-        const body = {id_message, id_user: id, id_room}
-        Socket.emit('message:read', body)
-        updatedCounted(id_room)
+        const body = { id_room, id_message, id_user: id }
+        socket.emit('messages:readInbox', body)
       }
 
+      if(!(current_id_room === id_room)) {
+        selectedInbox(InboxDispatch, props)
+      }
     }
 
     return (
-        <li className="chat-card" onClick={e => handleClick(id_room)}>
+        <li className="chat-card" onClick={handleClick}>
           <img src={photo_url} alt="Avatar" className="avatar" />
           <div className="chat-info">
             <h3 className="chat-name">{displayName}</h3>

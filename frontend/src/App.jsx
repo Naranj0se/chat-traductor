@@ -1,17 +1,19 @@
-import React from "react";
+import UserProvider from "./store/context/user/UserProvider"
+import InboxProvider from "./store/context/inbox/inboxProvider"
+import MessageProvider from "./store/context/message/MessageProvider"
 
-import UserProvider from "./context/userContext/UserProvider"
-import ChatProvider from "./context/chatContext/ChatProvider";
 import AppRouter from "./router"
 
 function App() {
   return (
-    <UserProvider>
-      <ChatProvider>
-        <AppRouter />
-      </ChatProvider>
-    </UserProvider>
-  );
+    <InboxProvider>
+      <UserProvider>
+        <MessageProvider>
+          <AppRouter />
+        </MessageProvider>
+      </UserProvider>
+    </InboxProvider>
+  )
 }
 
-export default App;
+export default App

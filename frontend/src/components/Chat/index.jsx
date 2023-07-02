@@ -6,14 +6,11 @@ import { ChatInput } from "./components/ChatInput";
 import "./Chat.css"
 
 function Chat(){
-
-  const [messages, setMessages] = useState([])
-
   return (
     <div className="chat">
       <ChatHeader/>
-      <MessageContainer messages={messages} setMessages={setMessages} />
-      <ChatInput setMessages={setMessages}/>
+      <MessageContainer />
+      <ChatInput/>
     </div>
   );
 };

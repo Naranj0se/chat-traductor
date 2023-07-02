@@ -1,33 +1,31 @@
-import { useState } from "react";
-import TextareaAutosize from "react-textarea-autosize";
+import { useState, useContext } from "react";
+import TextareaAutosize from "react-textarea-autosize"
+
+import socket from "../../../../helpers/socket"
+import { InboxContext } from "../../../../store/context/inbox/inboxContext"
+import { UserContext } from "../../../../store/context/user/UserContext"
+
 import "./ChatInput.css"
-import socket from "../../../../helpers/socket";
-import { useContext } from "react";
-import ChatContext from "../../../../context/chatContext/ChatContext";
-import UserContext from "../../../../context/userContext/UserContext";
 
-function ChatInput({setMessages}) {
+function ChatInput() {
 
-  const { currentChat: { id_room } } = useContext(ChatContext)
-  const { user: { user_data: { id } } } = useContext(UserContext)
+  const initialValue = ''
+  const [message, setMessage] = useState(initialValue)
 
-  const [message, setMessage] = useState("")
+  const { current_id_room } = useContext(InboxContext)
+  const { user_data: { id } } = useContext(UserContext)
 
   const handleChange = e => setMessage(e.target.value) 
-
+  
   function handleSubmit() {
     const body = {
-      id_room,
+      id_room: current_id_room,
       message,
       id_user: id
     }
 
-    const newMessage = { message, id_room, id_user: id }
-
-    setMessages(messages => [...messages, newMessage])
-
-    socket.emit("client_message", body)
-    setMessage("")
+    socket.emit("messages:clientSendMessage", body)
+    setMessage(initialValue)
   }
 
   return (
@@ -40,7 +38,7 @@ function ChatInput({setMessages}) {
         </span>
       </button>
     </div>
-  );
-};
+  )
+}
 
 export { ChatInput };
