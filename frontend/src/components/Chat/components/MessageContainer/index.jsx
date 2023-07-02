@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { OtherMessage, OwnMessage } from "../Message";
 
 import { InboxContext } from '../../../../store/context/inbox/inboxContext';
@@ -20,6 +20,8 @@ function MessageContainer() {
   const isCachedMessages = loaded_messages_room.includes(current_id_room)
 
   const MessageRef = messages.find(lm => lm.id_room === current_id_room)
+  const messageContainerRef = useRef(null)
+  
 
   useEffect(() => {
     if(isPointed && !isCachedMessages) {
@@ -30,14 +32,16 @@ function MessageContainer() {
       })
     }
 
+    if (messageContainerRef.current) messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight
+
     return () => {
       socket.off('messages:getMessagesByIdRoom')
     }
-  }, [current_id_room])
+  }, [current_id_room, MessageRef?.Listmessages])
 
   return (
     <section className='messageContainer'>
-      <ul>
+      <ul ref={messageContainerRef}>
         { isCachedMessages && MessageRef.Listmessages.map((message) => {
 
           if(message.id_user === id){

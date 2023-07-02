@@ -1,6 +1,6 @@
 function getInboxChatsByIdQuery(id) {
     return `SELECT u1.*, u.username, u.displayName, u.id, u.photo_url FROM (SELECT p.id_room,
-        (SELECT COUNT(id) FROM messages WHERE id > p.id_lastest_messages AND p.id_room = id_room) as counter,
+        (SELECT COUNT(id) FROM messages WHERE id > p.id_lastest_messages AND p.id_room = id_room AND id_user != ${id} ) as counter,
         (SELECT message FROM messages WHERE id_room = p.id_room ORDER BY id DESC LIMIT 1) AS message,
         (SELECT id FROM messages WHERE id_room = p.id_room ORDER BY id DESC LIMIT 1) AS id_message,
         (SELECT created_at FROM messages WHERE id_room = p.id_room ORDER BY id DESC LIMIT 1) AS created_at

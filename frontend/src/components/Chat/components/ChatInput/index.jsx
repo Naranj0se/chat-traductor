@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize"
 
 import socket from "../../../../helpers/socket"
@@ -16,6 +16,7 @@ function ChatInput() {
   const { user_data: { id } } = useContext(UserContext)
 
   const handleChange = e => setMessage(e.target.value) 
+  const inputRef = useRef(null)
   
   function handleSubmit() {
     const body = {
@@ -26,12 +27,22 @@ function ChatInput() {
 
     socket.emit("messages:clientSendMessage", body)
     setMessage(initialValue)
+    inputRef.current.focus(); 
   }
+
+  const handleKeyDown = e => {
+    if (e.key === 'Enter' && e.ctrlKey) {
+      setMessage(message + '\n');
+      e.preventDefault();
+    } else if (e.key === 'Enter' && !e.ctrlKey) {
+      e.preventDefault()
+      handleSubmit()
+    }
+  };
 
   return (
     <div className="message-input">
-      <TextareaAutosize maxRows={10} value={message} onChange={handleChange} />
-      {/* <button>Enviar</button> */}
+      <TextareaAutosize maxRows={10} value={message} onChange={handleChange} onKeyDown={handleKeyDown} ref={inputRef}/>
       <button className="hvr-shrink" onClick={handleSubmit}>
         <span className="material-symbols-outlined material-symbols-outlined-send">
         send
