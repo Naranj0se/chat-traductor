@@ -14,6 +14,7 @@ import './MessageContainer.css'
 function MessageContainer() {
   const { isPointed, current_id_room } = useContext(InboxContext)
   const { id } = useContext(UserContext)
+  console.log(`id: ${id}`)
   const MessageDispatch = useContext(MessageDispatchContext)
   const { messages, loaded_messages_room } = useContext(MessageContext)
 

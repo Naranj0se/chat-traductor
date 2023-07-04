@@ -6,7 +6,7 @@
   import "./Contacts.css"
 
 
-  function Contacts({ isContactsOpen, toggleContacts }) {
+  function Contacts({ isContactsOpen, toggleContacts, toggleAddContacts }) {
   
     const { user_data } = useContext(UserContext)
     const { name, avatarURL } = user_data
@@ -26,7 +26,7 @@
           />
           <ContactsContainer />
           <div className="contacts-options">
-            <div className='contacts-option hvr-skew-forward'>
+            <div className='contacts-option hvr-skew-forward' onClick={toggleAddContacts}>
               <span className="material-symbols-outlined MenuIcon">
                 person_add
               </span>

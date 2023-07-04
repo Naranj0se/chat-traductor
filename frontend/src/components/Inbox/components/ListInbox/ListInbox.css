@@ -12,3 +12,7 @@ ul {
     padding: 0;
     overflow-y: scroll;
 }
+
+.not-found-message{
+  margin-left: 20px;
+}
