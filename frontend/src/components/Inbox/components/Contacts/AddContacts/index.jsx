@@ -14,11 +14,10 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts }) {
           <div className="contacts-title">Nuevo contacto</div>
         </div>
         <div>
-            <label htmlFor="search-user">Usuario:</label>
             <input 
             className="contacts-search Search"
             id='search-user' 
-            placeholder="@ejemplo" 
+            placeholder="@usuario" 
             // value= {searchValue}
             // onChange = {onSearchValueChange}
             />
