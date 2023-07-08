@@ -34,3 +34,11 @@ CREATE TABLE IF NOT EXISTS messages (
     FOREIGN KEY (id_user) REFERENCES users(id),
     FOREIGN KEY (id_room) REFERENCES rooms(id)
 );
+
+CREATE TABLE IF NOT EXISTS contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_user_adding INT,
+    id_user_added INT,
+    FOREIGN KEY (id_user_adding) REFERENCES users(id),
+    FOREIGN KEY (id_user_added) REFERENCES users(id)
+);

@@ -3,12 +3,18 @@ import { createServer } from 'http'
 import { Server as SocketServer } from 'socket.io'
 import { getInboxChatsById, getMessagesForIdRoom, AddMessage, LoginAuth, updatedLastestMessage } from './controllers/Inbox.js'
 
+import { UsernameRoutes, ContactsRoutes } from './routes/index.routes.js'
+
+
 const app = express()
 const port = process.env.PORT || 4000
 
+app.use(express.json())
+app.use('/users', UsernameRoutes)
+app.use('/contacts', ContactsRoutes)
+
 const server = createServer(app).listen(port)
 const io = new SocketServer(server, { cors: { origin: "*"}})
-
 
 io.on('connection', socket => {
 

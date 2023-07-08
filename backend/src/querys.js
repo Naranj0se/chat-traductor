@@ -31,4 +31,35 @@ function UpdatedLastestMessageQuery(body) {
     return `UPDATE participants SET id_lastest_messages = ${id_message} WHERE id_user=${id_user} AND id_room = ${id_room}`
 }
 
+export function getUserByUsernameQuery(username) {
+    return `SELECT id, username, displayName, photo_url FROM users WHERE username="${username}"`
+}
+
+export function AddContactQuery(body) {
+    const { id_user_adding, id_user_added } = body
+    return `INSERT INTO contacts (id_user_adding, id_user_added) VALUES ("${id_user_adding}", "${id_user_added}")`
+}
+
+export const createRoomQuery = 'INSERT INTO rooms VALUES()'
+
+export function getContactsByIdQuery(id_user_adding) {
+    return `SELECT u.id, u.username, u.displayName, u.photo_url FROM users u
+    INNER JOIN contacts c
+    ON c.id_user_added = u.id
+    WHERE c.id_user_adding = ${id_user_adding}`
+}
+
+export function isExistContact(body) {
+    const { id_user_adding, id_user_added } = body
+    return `SELECT count(id) as "existContact" FROM contacts WHERE id_user_adding = ${id_user_adding} AND id_user_added=${id_user_added}`
+}
+
+export function addParticipantsQuery(body) {
+    const { id_room, id_user_adding, id_user_added } = body
+    return `INSERT INTO participants(id_room, id_user) VALUES (${id_room}, ${id_user_adding}), (${id_room}, ${id_user_added})`
+}
+
+
+
+
 export { getInboxChatsByIdQuery, getMessagesByIdRoomQuery, insertMessageQuery, LoginAuthQuery, UpdatedLastestMessageQuery }

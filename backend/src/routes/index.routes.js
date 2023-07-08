@@ -1,3 +1,4 @@
-import InboxRouter from './Inbox.routes.js'
+import UsernameRoutes from './users.routes.js'
+import ContactsRoutes from './contacts.routes.js'
 
-export { InboxRouter }
+export { UsernameRoutes, ContactsRoutes }
