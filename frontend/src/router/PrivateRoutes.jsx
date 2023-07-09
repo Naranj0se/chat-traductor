@@ -5,7 +5,6 @@ import { UserContext } from '../store/context/user/UserContext'
 
 function PrivateRoute({ children }) {
     const { isLogged } = useContext(UserContext)
-    console.log(isLogged)
 
     return (isLogged) ? children : <Navigate to="/auth" />
 }

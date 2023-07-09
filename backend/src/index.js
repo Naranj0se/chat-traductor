@@ -10,6 +10,7 @@ const app = express()
 const port = process.env.PORT || 4000
 
 app.use(express.json())
+
 app.use('/users', UsernameRoutes)
 app.use('/contacts', ContactsRoutes)
 
@@ -17,6 +18,12 @@ const server = createServer(app).listen(port)
 const io = new SocketServer(server, { cors: { origin: "*"}})
 
 io.on('connection', socket => {
+
+    socket.on('initial_load', id_user => {
+      const socketID = socket.id
+
+      
+    })
 
     socket.on('inbox:initial_load', async id => {
       const res = await getInboxChatsById(id)

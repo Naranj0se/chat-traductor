@@ -16,3 +16,13 @@ export const getUserByUsername = async (req, res) => {
         return res.status(400).json(error)
     }
 }
+
+export const createUser = async (req, res) => {
+    try {
+        const body = req.body;
+
+        
+    } catch (error) {
+        return res.status(400).json(error)
+    }
+}
