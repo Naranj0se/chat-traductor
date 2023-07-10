@@ -15,6 +15,11 @@ CREATE TABLE IF NOT EXISTS rooms (
     id INT AUTO_INCREMENT PRIMARY KEY
 );
 
+CREATE TABLE IF NOT EXISTS connections(
+    id_user INT NOT NULL,
+    id_socket VARCHAR(255) NOT NULL
+);
+
 
 CREATE TABLE IF NOT EXISTS participants (
     id_room INT,

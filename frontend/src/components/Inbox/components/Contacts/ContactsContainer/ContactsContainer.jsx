@@ -10,7 +10,7 @@ function ContactsContainer(props) {
   return (
     <section className='contactsContainer chatsContainer'>
       <ul>
-        {listContacts.map( chat => <Contact key={chat.user_id} {...chat}/>)}
+        {listContacts.map( c => <Contact key={c.id} {...c}/>)}
       </ul>
     </section>
   );

@@ -2,13 +2,17 @@ import express from 'express'
 import { createServer } from 'http'
 import { Server as SocketServer } from 'socket.io'
 import { getInboxChatsById, getMessagesForIdRoom, AddMessage, LoginAuth, updatedLastestMessage } from './controllers/Inbox.js'
+import { initialLoadingSocket, deleteSocket } from './socket/socket.js'
+
 
 import { UsernameRoutes, ContactsRoutes } from './routes/index.routes.js'
 
+import cors from 'cors'
 
 const app = express()
 const port = process.env.PORT || 4000
 
+app.use(cors())
 app.use(express.json())
 
 app.use('/users', UsernameRoutes)
@@ -19,11 +23,19 @@ const io = new SocketServer(server, { cors: { origin: "*"}})
 
 io.on('connection', socket => {
 
-    socket.on('initial_load', id_user => {
-      const socketID = socket.id
+    socket.on('initial_loading', async id_user => {
+      const id_socket = socket.id
+      await initialLoadingSocket({ id_user, id_socket })
+    })
 
+    socket.on("disconnect", async () => {
+      await deleteSocket(socket.id)
+    })
+
+    socket.on("room:create", async participants => {
       
     })
+
 
     socket.on('inbox:initial_load', async id => {
       const res = await getInboxChatsById(id)

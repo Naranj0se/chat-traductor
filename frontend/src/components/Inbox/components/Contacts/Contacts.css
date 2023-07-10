@@ -67,12 +67,12 @@
   position: relative;
   bottom: 0;
   display: flex;
+  justify-content: space-between;
 }
 
 .MenuText {
   font-size: 16px;
   margin-bottom: 10px;
-  cursor: pointer;
 }
 
 .contacts-option{
@@ -89,7 +89,6 @@
 }
 
 .cerrar {
-  position: absolute;
   right: 0;
   margin-right: 16px;
 }
@@ -127,4 +126,17 @@
 .contact-name {
   font-size: 20px;
   font-weight: bold;
+}
+
+.add-enabled {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.add-disabled {
+  display: none;
 }

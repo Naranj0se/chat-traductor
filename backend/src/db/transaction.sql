@@ -9,8 +9,13 @@ operacion:BEGIN
 
         SELECT count(id) INTO isExistContact FROM contacts WHERE id_user_adding = pID_user_adding AND id_user_added = pID_user_added;
 
+        IF pID_user_adding = pID_user_added THEN
+            LEAVE operacion;
+        END IF;
+        
         IF isExistContact != 0 THEN
             SELECT "error" as status_code, "Este contacto ya existe." AS mensaje; 
+            LEAVE operacion;
         END IF;
 
         INSERT INTO contacts(id_user_adding, id_user_added) VALUES (pID_user_adding, pID_user_added);

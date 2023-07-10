@@ -7,7 +7,7 @@ export const getUserByUsername = async (req, res) => {
         const response = await pool.query(getUserByUsernameQuery(username))
         const data = response[0]
 
-        if(!data.length) return res.status(404).json({ status: "error", message: "Este usuario no se encuentra registrado" })
+        if(!data.length) return res.status(200).json({ status: "error", message: "Este usuario no se encuentra registrado" })
 
         const user = data[0]
 
