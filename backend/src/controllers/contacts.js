@@ -18,12 +18,8 @@ export const addContacts = async (req, res) => {
         const { id_user_adding, id_user_added } = req.body
         
         const response = await pool.query(`CALL add_contact(${id_user_adding}, ${id_user_added})`)
-        console.log(response)
-
-        return res.status(200).json({
-            status: "ok",
-            data: "Todo bien"
-        })
+        
+        return res.status(200).json(response[0][0][0])
     } catch (error) {
         console.log(error)
         return res.status(400).json(error)

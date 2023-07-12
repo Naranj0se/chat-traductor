@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../../../../store/context/user/UserContext';
+import axios from 'axios'
+import socket from '../../../../../helpers/socket';
 
 import "../Contacts.css"
 
 
-function AddContacts({ isAddContactsOpen, toggleAddContacts }) {
+function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
 
   const { user_data: {id} } = useContext(UserContext);
   const [searchUser, setSearchUser] = useState("")
@@ -13,7 +15,7 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts }) {
   
   useEffect(() => {
 
-  if (!searchUser) return 
+  if (!searchUser) return
 
   fetch(`http://localhost:4000/users/${searchUser}`)
   .then(response => response.json())
@@ -55,19 +57,21 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts }) {
   }
 
   const handleAdd = () => {
-
     if (Object.entries(userInfo).length === 0) return
 
-    fetch("http://localhost:4000/contacts" , {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id_user_adding: id,  
-        id_user_added: userInfo.id
-      })
+    const participants = {
+      id_user_adding: id,  
+      id_user_added: userInfo.id
+    }
+
+    axios.post("http://localhost:4000/contacts", participants)
+    .then(res => {
+      const { id_room } = res.data
+      const new_socket_room = { participants, id_room }
+      socket.emit('contact:added', new_socket_room)
+      socket.emit("socket:new_room", new_socket_room)
     })
+    
   }
 
   return (
@@ -94,7 +98,7 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts }) {
             </span>
             <span className='MenuText'>Cerrar</span>
           </div>
-        <div className={`${enableAdd ? 'add-enabled' : 'add-disabled'} hvr-skew-forward`}>
+        <div className="hvr-skew-forward">
             <span className="material-symbols-outlined MenuIcon">
               person_add
             </span>

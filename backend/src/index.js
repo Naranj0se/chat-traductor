@@ -1,11 +1,10 @@
 import express from 'express'
 import { createServer } from 'http'
 import { Server as SocketServer } from 'socket.io'
-import { getInboxChatsById, getMessagesForIdRoom, AddMessage, LoginAuth, updatedLastestMessage } from './controllers/Inbox.js'
-import { initialLoadingSocket, deleteSocket } from './socket/socket.js'
+import { getInboxChatsById, getMessagesForIdRoom, AddMessage, LoginAuth, updatedLastestMessage, getContactById } from './controllers/Inbox.js'
 
 
-import { UsernameRoutes, ContactsRoutes } from './routes/index.routes.js'
+import { UsernameRoutes, ContactsRoutes, AuthRoutes } from './routes/index.routes.js'
 
 import cors from 'cors'
 
@@ -17,31 +16,53 @@ app.use(express.json())
 
 app.use('/users', UsernameRoutes)
 app.use('/contacts', ContactsRoutes)
+app.use('/auth', AuthRoutes)
 
 const server = createServer(app).listen(port)
 const io = new SocketServer(server, { cors: { origin: "*"}})
 
+
+io.use((socket, next) => {
+  socket.id_user = parseInt(socket.handshake.query.id_user)
+
+  next()
+})
+
 io.on('connection', socket => {
 
-    socket.on('initial_loading', async id_user => {
-      const id_socket = socket.id
-      await initialLoadingSocket({ id_user, id_socket })
+  //io.sockets.sockets.forEach((value, key) => {
+  //  console.log(value.id_user)
+  //})
+
+    console.log('Maincra')
+
+    socket.on("socket:new_room", data => {
+      const { participants, id_room } = data
+      const participantsArray = Object.keys(participants).map(key => participants[key]);
+
+      io.sockets.sockets.forEach((value, key) => {
+        const isSend = participantsArray.filter(p => p === value.user_id).length
+
+        if(isSend) io.to(key).emit('socket:new_room', id_room)
+      })
     })
 
-    socket.on("disconnect", async () => {
-      await deleteSocket(socket.id)
+    socket.on("contact:added", async data => {
+      const id = data.participants.id_user_adding
+      const res = await getContactById(data)
+
+      io.to(`contacts-${id}`).emit("contact:added", res)
     })
 
-    socket.on("room:create", async participants => {
-      
-    })
-
+    socket.on("socket:new_listen", id_room => socket.join(id_room))
 
     socket.on('inbox:initial_load', async id => {
       const res = await getInboxChatsById(id)
-      const rooms = res.map(r => r.id_room)
-
-      socket.join(rooms)
+      if(res.length !== 0) {
+        const rooms = res.map(r => r.id_room)
+        socket.join(rooms)
+      }
+      socket.join(`contacts-${id}`)
       socket.emit('inbox:initial_load', res)
     })
 

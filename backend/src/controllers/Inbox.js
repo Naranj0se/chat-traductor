@@ -1,5 +1,5 @@
 import { pool } from "../db.js"
-import { getInboxChatsByIdQuery, getMessagesByIdRoomQuery, insertMessageQuery, LoginAuthQuery, UpdatedLastestMessageQuery } from "../querys.js"
+import { getInboxChatsByIdQuery, getMessagesByIdRoomQuery, insertMessageQuery, LoginAuthQuery, UpdatedLastestMessageQuery, getContactByIdQuery } from "../querys.js"
 
 export const getInboxChatsById = async id => {
     try {
@@ -9,6 +9,8 @@ export const getInboxChatsById = async id => {
     } catch(error) {
         console.log(error)
         return error
+        
+    
     }
 }
 
@@ -58,4 +60,16 @@ export const updatedLastestMessage = async body => {
     } catch (error) {
         console.log(error)
     }
-} 
+}
+
+export const getContactById = async ({ participants, id_room }) => {
+
+    try {
+        const { id_user_adding, id_user_added } = participants
+        const res = await pool.query(getContactByIdQuery( id_user_added, id_room ))
+
+        return res[0][0]
+    } catch (error) {
+        console.log(error)
+    }
+}

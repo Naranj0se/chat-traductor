@@ -1,42 +1,40 @@
-import { useState, useContext } from "react"
-import socket from "../../../helpers/socket"
-
-import { UserDispatchContext } from "../../../store/context/user/UserContext"
+import { useState } from "react"
+import axios from "axios"
+import socket from "../../../helpers/socket";
 
 import "../Auth.css"
 
-const Login = ({ onCreateAccount , show }) => {
+const Login = ({ onCreateAccount , show, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const setUser = useContext(UserDispatchContext)
+  const defaultError = { status: "ok", message: "" }
+  const [error, setError] = useState(defaultError)
   
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const handleEmailChange = e => setEmail(e.target.value)
 
+  const handlePasswordChange = e => setPassword(e.target.value)
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault()
     const body = { username: email, password }
-    // Aquí puedes realizar la lógica de autenticación o enviar los datos al servidor
-    socket.emit('auth:login', body)
-    socket.on('auth:login', body => {
-      if(body.status === "ok") {
-        setUser({
-          isLogged: true,
-          user_data: body.user
-        })
-        localStorage.setItem('isLogged', true)
-        localStorage.setItem('user_data', JSON.stringify(body.user))
-      }
-    })
-  };
 
+    axios.post('http://localhost:4000/auth/login', body)
+    .then(res => {
+      const { status, data } = res.data
+      console.log(res)
+
+      if(status === "error") setError(res.data)
+      if(status === "ok") {
+          localStorage.setItem('isLogged', true)
+          localStorage.setItem('user_data', JSON.stringify(data))
+          setError(defaultError)
+          setUser({ isLogged: true, user_data: data })
+          socket.connect()
+        }
+
+    })
+  }
 
   return (
     <div className={`login-container login ${(!show) ? 'show' : ''}`}>  
@@ -61,6 +59,7 @@ const Login = ({ onCreateAccount , show }) => {
             required
           />
         </div>
+        {error.status === 'error' && <p>{error.message}</p>}
         <button className="hvr-fade" type="submit">Login</button>
       </form>
       <div className="additional-options">

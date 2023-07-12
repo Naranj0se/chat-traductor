@@ -27,11 +27,14 @@ function useListInbox() {
         socket.on("messages:readInbox", id_room => {
             updatedInboxCounterByRead(dispatch, id_room)
         })
+        socket.on("socket:new_room", id_room => socket.emit("socket:new_listen", id_room))
+
 
         return () => {
             socket.off("inbox:initial_load")
             socket.off("messages:clientSendMessage")
             socket.off("messages:readInbox")
+            socket.off("socket:new_room")
         }
     }, [])
 

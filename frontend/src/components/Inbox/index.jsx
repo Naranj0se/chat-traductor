@@ -32,7 +32,7 @@ function Inbox() {
     <section className='inbox'>
       <SideMenu toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} toggleContacts={toggleContacts}/>
       <Contacts toggleContacts={toggleContacts} isContactsOpen={isContactsOpen} toggleAddContacts={toggleAddContacts}/>
-      <AddContacts toggleAddContacts={toggleAddContacts} isAddContactsOpen={isAddContactsOpen}/>
+      <AddContacts toggleAddContacts={toggleAddContacts} toggleContacts={toggleContacts} isAddContactsOpen={isAddContactsOpen}/>
       <InboxHeader>
         <MenuButton toggleMenu={toggleMenu}/>
         <SearchChat searchValue={searchValue} setSearchValue={setSearchValue}/>

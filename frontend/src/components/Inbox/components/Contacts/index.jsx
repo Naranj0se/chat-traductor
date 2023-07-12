@@ -9,7 +9,6 @@
   function Contacts({ isContactsOpen, toggleContacts, toggleAddContacts }) {
   
     const { user_data } = useContext(UserContext)
-    const { name, avatarURL } = user_data
 
     return (
       <div className={`contacts ${isContactsOpen ? 'open' : ''}`}>
@@ -24,7 +23,7 @@
             // value= {searchValue}
             // onChange = {onSearchValueChange}
           />
-          <ContactsContainer />
+          <ContactsContainer toggleContacts={toggleContacts} />
           <div className="contacts-options">
             <div className='contacts-option hvr-skew-forward' onClick={toggleAddContacts}>
               <span className="material-symbols-outlined MenuIcon">

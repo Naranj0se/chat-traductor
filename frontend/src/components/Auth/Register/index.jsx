@@ -1,37 +1,61 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import "../Auth.css"
+import axios from 'axios'
+import socket from '../../../helpers/socket';
 
-const Register = ({ onCreateAccount , show }) => {
-  const [nombre, setNombre] = useState('');
-  const [apellido, setApellido] = useState('');
-  const [correo, setCorreo] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [idioma, setIdioma] = useState('');
+const Register = ({ onCreateAccount , show, setUser }) => {
+  const initialState = {
+    nombre: '',
+    apellido: '',
+    username: '',
+    password: '',
+    idioma: ''
+  }
+  const defaultError = { status: "ok", message: "" }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Aquí puedes realizar la lógica de registro
-  };
+  const [form, setForm] = useState(initialState)
 
-  const handleNombreChange = (event) => {
-    setNombre(event.target.value);
-  };
+  useEffect(() => {
+    
+    return () => {
+      setForm(initialState)
+      setError(defaultError)
+    }
+  }, [])
 
-  const handleApellidoChange = (event) => {
-    setApellido(event.target.value);
-  };
+  const [error, setError] = useState(defaultError)
 
-  const handleCorreoChange = (event) => {
-    setCorreo(event.target.value);
-  };
+  const { nombre, apellido, username, password, idioma } = form
 
-  const handleContraseñaChange = (event) => {
-    setContraseña(event.target.value);
-  };
+  const onHandleChange = e => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })}
 
-  const handleIdiomaChange = (event) => {
-    setIdioma(event.target.value);
-  };
+    function handleSubmit(e) {
+      e.preventDefault()
+      const body = {
+        displayName: nombre + ' ' + apellido,
+        username,
+        password,
+        idioma,
+      }
+      
+      axios.post('http://localhost:4000/auth/register', body)
+      .then(res => {
+        const { status, data } = res.data
+
+        if(status === "error") setError(res.data)
+        if(status === "ok") {
+          localStorage.setItem('isLogged', true)
+          localStorage.setItem('user_data', JSON.stringify(data.user))
+          setError(defaultError)
+          setUser({ isLogged: true, user_data: data })
+          socket.connect()
+        }
+      })
+    }
 
   return (
     <div className={`register-container register ${show ? 'show' : ''}`}>
@@ -42,28 +66,44 @@ const Register = ({ onCreateAccount , show }) => {
           <div className='full-name'>
             <div className='form-name'>
               <label htmlFor="nombre">Nombre:</label>
-              <input type="text" id="nombre" value={nombre} onChange={handleNombreChange} required />
+              <input 
+                type="text" 
+                name="nombre" 
+                value={nombre} 
+                onChange={onHandleChange} required />
             </div>
             <div className='form-lastname'>
               <label htmlFor="apellido">Apellido:</label>
-              <input type="text" id="apellido" value={apellido} onChange={handleApellidoChange} required />
+              <input 
+              type="text" 
+              name="apellido" 
+              value={apellido} 
+              onChange={onHandleChange} required />
             </div>
           </div>
 
-          <label htmlFor="correo">Correo electrónico:</label>
-          <input type="email" id="correo" value={correo} onChange={handleCorreoChange} required />
+          <label htmlFor="username">Nombre de usuario:</label>
+          <input 
+            type="text" 
+            name="username" 
+            value={username} 
+            onChange={onHandleChange} required />
 
           <label htmlFor="contraseña">Contraseña:</label>
           <input
             type="text"
-            id="contraseña"
-            value={contraseña}
-            onChange={handleContraseñaChange}
+            name="password"
+            value={password}
+            onChange={onHandleChange}
             required
           />
 
           <label htmlFor="idioma">Idioma:</label>
-          <select className='select-input' id="idioma" value={idioma} onChange={handleIdiomaChange} required>
+          <select 
+            className='select-input' 
+            name="idioma" 
+            value={idioma} 
+            onChange={onHandleChange} required>
             <option value="">Seleccione un idioma</option>
             <option value="alemán">alemán</option>
             <option value="búlgaro">búlgaro</option>
@@ -95,7 +135,7 @@ const Register = ({ onCreateAccount , show }) => {
             <option value="turco">turco</option>
             <option value="ucraniano">ucraniano</option>
           </select>
-
+          {error.status === 'error' && <p>{error.message}</p>}
           <button type="submit">Registrarse</button>
         </form>
         <a className="toggle-register hvr-skew-forward" onClick={onCreateAccount}>Ya tengo una cuenta</a>

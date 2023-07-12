@@ -43,10 +43,21 @@ export function AddContactQuery(body) {
 export const createRoomQuery = 'INSERT INTO rooms VALUES()'
 
 export function getContactsByIdQuery(id_user_adding) {
-    return `SELECT u.id, u.username, u.displayName, u.photo_url FROM users u
+    return `SELECT u.id, u.username, u.displayName, u.photo_url, p.id_room FROM users u
     INNER JOIN contacts c
     ON c.id_user_added = u.id
+    INNER JOIN participants p
+    ON p.id_user = u.id
     WHERE c.id_user_adding = ${id_user_adding}`
+}
+
+export function getContactByIdQuery(id_user_added, id_room) {
+    return `SELECT u.id, u.username, u.displayName, u.photo_url, p.id_room FROM users u
+    INNER JOIN contacts c
+    ON c.id_user_added = u.id
+    INNER JOIN participants p
+    ON p.id_user = u.id
+    WHERE c.id_user_added = ${id_user_added} AND p.id_room = ${id_room}`
 }
 
 export function isExistContact(body) {
@@ -57,6 +68,11 @@ export function isExistContact(body) {
 export function addParticipantsQuery(body) {
     const { id_room, id_user_adding, id_user_added } = body
     return `INSERT INTO participants(id_room, id_user) VALUES (${id_room}, ${id_user_adding}), (${id_room}, ${id_user_added})`
+}
+
+export function authRegisterQuery({ username, password, displayName, photo_url, idioma}) {
+
+    return `INSERT INTO users(username, password, displayName, photo_url, idioma) VALUES ("${username}", "${password}", "${displayName}", "${photo_url}", "${idioma}")`
 }
 
 
