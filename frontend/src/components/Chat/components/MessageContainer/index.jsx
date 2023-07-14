@@ -12,7 +12,7 @@ import socket from '../../../../helpers/socket';
 import './MessageContainer.css'
 
 function MessageContainer() {
-  const { isPointed, current_id_room } = useContext(InboxContext)
+  const { isPointed, current_id_room, Pointer } = useContext(InboxContext)
   const { user_data: {id} } = useContext(UserContext)
   const MessageDispatch = useContext(MessageDispatchContext)
   const { messages, loaded_messages_room } = useContext(MessageContext)
@@ -24,12 +24,19 @@ function MessageContainer() {
   
 
   useEffect(() => {
+
     if(isPointed && !isCachedMessages) {
       socket.emit('messages:getMessagesByIdRoom', current_id_room)
       socket.on('messages:getMessagesByIdRoom', messages => {
         const data = { current_id_room, messages }
         getMessagesByIdRoom(MessageDispatch, data)
       })
+    }
+
+    if(isPointed && Pointer.id_message === null) {
+      const data = { id, id_room: current_id_room }
+      console.log(data)
+      socket.emit('message:new_inbox', data )
     }
 
     if (messageContainerRef.current) messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight

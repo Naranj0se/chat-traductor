@@ -1,16 +1,11 @@
 import io from "socket.io-client"
 
-const devModeShared = false
+const id_user = JSON.parse(localStorage.getItem('user_data'))?.id|| null
 
-const urlDev = devModeShared ? "http://192.168.1.116:4000" : "http://localhost:4000"
+const auto_connect_option = Boolean(localStorage.getItem('isLogged')) || false
+const URL_SOCKET = "http://localhost:4000"
 
-const initialState = {
-    user_data: JSON.parse(localStorage.getItem('user_data')) || null
-}
-
-const id_user = initialState.user_data !== null ? initialState.user_data.id : 0
-
-const socket = io(urlDev, { query: { id_user }, autoConnect: false  })
+const socket = io(URL_SOCKET, { query: { id_user }, autoConnect: auto_connect_option  })
 
 socket.onAny((event, ...args) => {
     console.log(event, args);

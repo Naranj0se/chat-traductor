@@ -34,3 +34,10 @@ export function updatedInboxCounterByRead(dispatch, data) {
         data
     })
 }
+
+export function newInbox(dispatch, data) {
+    dispatch({
+        type: types.INBOX_NEW,
+        data
+    })
+}

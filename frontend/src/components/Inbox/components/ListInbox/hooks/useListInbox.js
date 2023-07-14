@@ -5,7 +5,7 @@ import { InboxContext, InboxDispatchContext } from '../../../../../store/context
 import { UserContext } from '../../../../../store/context/user/UserContext'
 import { MessageDispatchContext } from '../../../../../store/context/message/MessageContext'
 
-import { initialLoadInbox, updatedInboxNewMessage, updatedInboxCounter, updatedInboxCounterByRead } from '../../../../../store/dispatch/InboxDispatch'
+import { initialLoadInbox, updatedInboxNewMessage, updatedInboxCounter, updatedInboxCounterByRead, newInbox } from '../../../../../store/dispatch/InboxDispatch'
 import { addMessage } from '../../../../../store/dispatch/MessageDispatch'
 
 
@@ -28,6 +28,10 @@ function useListInbox() {
             updatedInboxCounterByRead(dispatch, id_room)
         })
         socket.on("socket:new_room", id_room => socket.emit("socket:new_listen", id_room))
+        socket.on('message:new_inbox', inbox => {
+            console.log(inbox)
+            newInbox(dispatch, inbox)
+        } )
 
 
         return () => {
@@ -35,6 +39,7 @@ function useListInbox() {
             socket.off("messages:clientSendMessage")
             socket.off("messages:readInbox")
             socket.off("socket:new_room")
+            socket.off("message:new_inbox")
         }
     }, [])
 

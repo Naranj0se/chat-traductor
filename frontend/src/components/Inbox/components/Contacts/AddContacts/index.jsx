@@ -5,6 +5,7 @@ import socket from '../../../../../helpers/socket';
 
 import "../Contacts.css"
 
+import { InboxDispatchContext } from '../../../../../store/context/inbox/inboxContext';
 
 function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
 
@@ -13,9 +14,12 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
   const [userInfo, setUserInfo] = useState({})
   const [enableAdd, setEnableAdd] = useState(false)
   
+  const InboxDispatch = useContext(InboxDispatchContext)
+  
   useEffect(() => {
 
   if (!searchUser) return
+
 
   fetch(`http://localhost:4000/users/${searchUser}`)
   .then(response => response.json())
@@ -24,6 +28,7 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
     if (body.status === "ok") {
       setUserInfo(body.data)
       setEnableAdd(true)
+      
     }
     
     if (body.status === "error") {
@@ -70,6 +75,7 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
       const new_socket_room = { participants, id_room }
       socket.emit('contact:added', new_socket_room)
       socket.emit("socket:new_room", new_socket_room)
+      toggleContacts()
     })
     
   }
@@ -98,11 +104,11 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
             </span>
             <span className='MenuText'>Cerrar</span>
           </div>
-        <div className="hvr-skew-forward">
+        <div className="hvr-skew-forward" style={{background: "#312122"}} onClick={handleAdd}>
             <span className="material-symbols-outlined MenuIcon">
               person_add
             </span>
-            <span className={"MenuText"} onClick={handleAdd}>Añadir</span>
+            <span className={"MenuText"} >Añadir</span>
         </div>
         </div>
       </div>

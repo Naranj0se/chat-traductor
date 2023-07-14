@@ -14,7 +14,9 @@ function useListContacts() {
         if(body.data !== 0) setListContacts(body.data)
       })
 
-      socket.on("contact:added", res => setListContacts(l => [...l, res]))
+      socket.on("contact:added", res => {
+        setListContacts(l => [...l, res])
+      })
 
       return () => {
         socket.off("contact:added")

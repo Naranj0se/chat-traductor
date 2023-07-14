@@ -1,4 +1,5 @@
 import React, {useContext} from 'react';
+import socket from '../../../../helpers/socket';
 import "./SideMenu.css"
 
 import { UserContext, UserDispatchContext } from '../../../../store/context/user/UserContext';
@@ -17,6 +18,7 @@ function SideMenu({ isMenuOpen, toggleMenu, toggleContacts }) {
      })
 
     localStorage.clear()
+    socket.disconnect()
   };
 
   return (

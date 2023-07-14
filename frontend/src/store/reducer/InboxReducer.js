@@ -22,6 +22,9 @@ const InboxReducer = (state, action) => {
         
         case types.INBOX_UPDATE_COUNTER_BY_READ:
             return {...state, listInbox: state.listInbox.map(i => i.id_room === action.data ? ({...i, counter: 0}): i)}
+        
+        case types.INBOX_NEW:
+            return {...state, listInbox: [...state.listInbox, action.data]}
 
         default:
             return state
