@@ -13,10 +13,10 @@ function useListInbox() {
     const { listInbox, current_id_room } = useContext(InboxContext)
     const dispatch = useContext(InboxDispatchContext)
     const messageDispatch = useContext(MessageDispatchContext)
-    const { user_data: { id }} = useContext(UserContext)
+    const { user_data: { id, id_idioma }} = useContext(UserContext)
     
     useEffect(() => {
-        socket.emit('inbox:initial_load', id)
+        socket.emit('inbox:initial_load', ({id, id_idioma}))
         socket.on('inbox:initial_load', listInbox => initialLoadInbox(dispatch, listInbox))
         socket.on("messages:clientSendMessage", new_msg => {
             updatedInboxNewMessage(dispatch, new_msg)

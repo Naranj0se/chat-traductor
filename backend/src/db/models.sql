@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS messages (
     created_at TIMESTAMP,
     id_user INT,
     id_room INT,
+    id_idioma INT,
     FOREIGN KEY (id_user) REFERENCES users(id),
     FOREIGN KEY (id_room) REFERENCES rooms(id)
 );
@@ -47,3 +48,8 @@ CREATE TABLE IF NOT EXISTS contacts (
     FOREIGN KEY (id_user_adding) REFERENCES users(id),
     FOREIGN KEY (id_user_added) REFERENCES users(id)
 );
+
+CREATE TABLE IF NOT EXISTS Languages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+)

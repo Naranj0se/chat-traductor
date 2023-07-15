@@ -1,9 +1,9 @@
 import { pool } from "../db.js"
 import { getInboxChatsByIdQuery, generateNewNinboxQuery, getMessagesByIdRoomQuery, insertMessageQuery, LoginAuthQuery, UpdatedLastestMessageQuery, getContactByIdQuery } from "../querys.js"
 
-export const getInboxChatsById = async id => {
+export const getInboxChatsById = async (id, id_idioma) => {
     try {
-        const res = await pool.query(getInboxChatsByIdQuery(id))  
+        const res = await pool.query(getInboxChatsByIdQuery(id, id_idioma))  
         
         return res[0]
     } catch(error) {
@@ -14,9 +14,9 @@ export const getInboxChatsById = async id => {
     }
 }
 
-export const getMessagesForIdRoom = async id => {
+export const getMessagesForIdRoom = async (id_room, id_idioma) => {
     try {
-        const res = await pool.query(getMessagesByIdRoomQuery(id))
+        const res = await pool.query(getMessagesByIdRoomQuery(id_room, id_idioma))
 
         return res[0]
     } catch (error) {

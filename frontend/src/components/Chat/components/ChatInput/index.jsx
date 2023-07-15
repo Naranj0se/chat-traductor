@@ -12,8 +12,8 @@ function ChatInput() {
   const initialValue = ''
   const [message, setMessage] = useState(initialValue)
 
-  const { current_id_room } = useContext(InboxContext)
-  const { user_data: { id } } = useContext(UserContext)
+  const { current_id_room, Pointer } = useContext(InboxContext)
+  const { user_data: { id, id_idioma } } = useContext(UserContext)
 
   const handleChange = e => setMessage(e.target.value) 
   const inputRef = useRef(null)
@@ -22,7 +22,10 @@ function ChatInput() {
     const body = {
       id_room: current_id_room,
       message,
-      id_user: id
+      id_user: id,
+      id_idioma,
+      other_lang: Pointer.id_idioma,
+      id_target: Pointer.id
     }
 
     socket.emit("messages:clientSendMessage", body)

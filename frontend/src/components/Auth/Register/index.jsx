@@ -3,6 +3,8 @@ import "../Auth.css"
 import axios from 'axios'
 import socket from '../../../helpers/socket';
 
+import Lang from './lang';
+
 const Register = ({ onCreateAccount , show, setUser }) => {
   const initialState = {
     nombre: '',
@@ -27,7 +29,9 @@ const Register = ({ onCreateAccount , show, setUser }) => {
 
   const { nombre, apellido, username, password, idioma } = form
 
-  const onHandleChange = e => {
+
+  const onHandleChange = e => {  
+
     setForm({
       ...form,
       [e.target.name]: e.target.value
@@ -39,7 +43,7 @@ const Register = ({ onCreateAccount , show, setUser }) => {
         displayName: nombre + ' ' + apellido,
         username,
         password,
-        idioma,
+        idioma: parseInt(idioma),
       }
       
       axios.post('http://localhost:4000/auth/register', body)
@@ -49,7 +53,7 @@ const Register = ({ onCreateAccount , show, setUser }) => {
         if(status === "error") setError(res.data)
         if(status === "ok") {
           localStorage.setItem('isLogged', true)
-          localStorage.setItem('user_data', JSON.stringify(data.user))
+          localStorage.setItem('user_data', JSON.stringify(data))
           setError(defaultError)
           setUser({ isLogged: true, user_data: data })
           socket.connect()
@@ -105,35 +109,7 @@ const Register = ({ onCreateAccount , show, setUser }) => {
             value={idioma} 
             onChange={onHandleChange} required>
             <option value="">Seleccione un idioma</option>
-            <option value="alemán">alemán</option>
-            <option value="búlgaro">búlgaro</option>
-            <option value="checo">checo</option>
-            <option value="chino">chino</option>
-            <option value="coreano">coreano</option>
-            <option value="danés">danés</option>
-            <option value="eslovaco">eslovaco</option>
-            <option value="esloveno">esloveno</option>
-            <option value="español">español</option>
-            <option value="estonio">estonio</option>
-            <option value="finés">finés</option>
-            <option value="francés">francés</option>
-            <option value="griego">griego</option>
-            <option value="húngaro">húngaro</option>
-            <option value="indonesio">indonesio</option>
-            <option value="inglés">inglés</option>
-            <option value="italiano">italiano</option>
-            <option value="japonés">japonés</option>
-            <option value="letón">letón</option>
-            <option value="lituano">lituano</option>
-            <option value="neerlandés">neerlandés</option>
-            <option value="noruego (bokmål)">noruego (bokmål)</option>
-            <option value="polaco">polaco</option>
-            <option value="portugués">portugués</option>
-            <option value="rumano">rumano</option>
-            <option value="ruso">ruso</option>
-            <option value="sueco">sueco</option>
-            <option value="turco">turco</option>
-            <option value="ucraniano">ucraniano</option>
+            {Lang.map(({ code, name }, i) => <option value={i+1}>{name}</option>)}
           </select>
           {error.status === 'error' && <p>{error.message}</p>}
           <button type="submit">Registrarse</button>
