@@ -23,7 +23,7 @@ function ListInbox({ searchChatByTitle , searchValue }) {
       return (
         <section className='chatsContainer'>
           <ul>
-            { filteredListInbox.map(inbox => <InboxItem key={inbox.id_room} {...inbox}/>) }
+            { filteredListInbox.filter(i => i.id_message === null).map(inbox => <InboxItem key={inbox.id_room} {...inbox}/>) }
           </ul>
         </section>
       );
@@ -32,7 +32,7 @@ function ListInbox({ searchChatByTitle , searchValue }) {
     return (
       <section className='chatsContainer'>
         <ul>
-          { listInbox.map(inbox => <InboxItem key={inbox.id_room} {...inbox}/>) }
+          { listInbox.filter(i => i.id_message !== null).map(inbox => <InboxItem key={inbox.id_room} {...inbox}/>) }
         </ul>
       </section>
     );

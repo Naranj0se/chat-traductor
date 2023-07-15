@@ -1,7 +1,7 @@
 import express from 'express'
 import { createServer } from 'http'
 import { Server as SocketServer } from 'socket.io'
-import { getInboxChatsById, getMessagesForIdRoom, AddMessage, LoginAuth, updatedLastestMessage, getContactById } from './controllers/Inbox.js'
+import { getInboxChatsById, getMessagesForIdRoom, AddMessage, LoginAuth, updatedLastestMessage, getContactById, getNewInbox } from './controllers/Inbox.js'
 
 
 import { UsernameRoutes, ContactsRoutes, AuthRoutes } from './routes/index.routes.js'
@@ -34,17 +34,17 @@ io.on('connection', socket => {
   //  console.log(value.id_user)
   //})
 
-    console.log('Maincra')
-
-    socket.on("socket:new_room", data => {
+    socket.on("socket:new_room", async data => {
       const { participants, id_room } = data
+      const { id_user_adding, id_user_added } = participants
+
       const participantsArray = Object.keys(participants).map(key => participants[key]);
 
-      io.sockets.sockets.forEach((value, key) => {
-        const isSend = participantsArray.filter(p => p === value.user_id).length
-
-        if(isSend) io.to(key).emit('socket:new_room', id_room)
-      })
+      const new_inbox = await getNewInbox(data)
+      const { inbox_adding, inbox_added } = new_inbox
+      
+      io.to(`contacts-${id_user_adding}`).emit('socket:new_room', {id_room, inbox: inbox_adding})
+      io.to(`contacts-${id_user_added}`).emit('socket:new_room', {id_room, inbox: inbox_added})
     })
 
     socket.on("contact:added", async data => {

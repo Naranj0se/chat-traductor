@@ -1,5 +1,5 @@
 import { pool } from "../db.js"
-import { getInboxChatsByIdQuery, getMessagesByIdRoomQuery, insertMessageQuery, LoginAuthQuery, UpdatedLastestMessageQuery, getContactByIdQuery } from "../querys.js"
+import { getInboxChatsByIdQuery, generateNewNinboxQuery, getMessagesByIdRoomQuery, insertMessageQuery, LoginAuthQuery, UpdatedLastestMessageQuery, getContactByIdQuery } from "../querys.js"
 
 export const getInboxChatsById = async id => {
     try {
@@ -71,5 +71,24 @@ export const getContactById = async ({ participants, id_room }) => {
         return res[0][0]
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const getNewInbox = async data => {
+    try {
+        const { participants, id_room } = data
+        const { id_user_adding, id_user_added } = participants
+        
+        const res_adding = await pool.query(generateNewNinboxQuery(id_user_adding, id_room))
+        const inbox_adding = res_adding[0][0]
+        
+
+        const res_added = await pool.query(generateNewNinboxQuery(id_user_added, id_room))
+        const inbox_added = res_added[0][0]
+
+        return { inbox_adding, inbox_added }
+    } catch (error) {
+        console.log(error)
+        return []
     }
 }

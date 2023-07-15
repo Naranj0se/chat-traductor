@@ -10,7 +10,7 @@ import { addMessage } from '../../../../../store/dispatch/MessageDispatch'
 
 
 function useListInbox() {
-    const { listInbox } = useContext(InboxContext)
+    const { listInbox, current_id_room } = useContext(InboxContext)
     const dispatch = useContext(InboxDispatchContext)
     const messageDispatch = useContext(MessageDispatchContext)
     const { user_data: { id }} = useContext(UserContext)
@@ -22,16 +22,17 @@ function useListInbox() {
             updatedInboxNewMessage(dispatch, new_msg)
             addMessage(messageDispatch, new_msg)
 
-            if(!(new_msg.id_user === id)) updatedInboxCounter(dispatch, new_msg.id_room)
+            if(new_msg.id_user !== id && current_id_room !== new_msg.id_room ) updatedInboxCounter(dispatch, new_msg.id_room)
         })
         socket.on("messages:readInbox", id_room => {
             updatedInboxCounterByRead(dispatch, id_room)
         })
-        socket.on("socket:new_room", id_room => socket.emit("socket:new_listen", id_room))
-        socket.on('message:new_inbox', inbox => {
-            console.log(inbox)
+        socket.on("socket:new_room", res => {
+            const { id_room, inbox } = res
             newInbox(dispatch, inbox)
-        } )
+
+            socket.emit("socket:new_listen", id_room)
+        })
 
 
         return () => {
@@ -39,7 +40,6 @@ function useListInbox() {
             socket.off("messages:clientSendMessage")
             socket.off("messages:readInbox")
             socket.off("socket:new_room")
-            socket.off("message:new_inbox")
         }
     }, [])
 

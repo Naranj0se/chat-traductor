@@ -70,11 +70,11 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
     }
 
     axios.post("http://localhost:4000/contacts", participants)
-    .then(res => {
-      const { id_room } = res.data
+    .then(res => {  
+      const { id_room, isFirstCreated } = res.data
       const new_socket_room = { participants, id_room }
       socket.emit('contact:added', new_socket_room)
-      socket.emit("socket:new_room", new_socket_room)
+      if(isFirstCreated) socket.emit("socket:new_room", new_socket_room)
       toggleContacts()
     })
     

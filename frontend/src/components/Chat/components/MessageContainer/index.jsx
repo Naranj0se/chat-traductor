@@ -33,12 +33,6 @@ function MessageContainer() {
       })
     }
 
-    if(isPointed && Pointer.id_message === null) {
-      const data = { id, id_room: current_id_room }
-      console.log(data)
-      socket.emit('message:new_inbox', data )
-    }
-
     if (messageContainerRef.current) messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight
 
     return () => {
