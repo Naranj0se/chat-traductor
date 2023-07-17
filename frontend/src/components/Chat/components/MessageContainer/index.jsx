@@ -12,8 +12,8 @@ import socket from '../../../../helpers/socket';
 import './MessageContainer.css'
 
 function MessageContainer() {
-  const { isPointed, current_id_room, Pointer } = useContext(InboxContext)
-  const { user_data: {id} } = useContext(UserContext)
+  const { isPointed, current_id_room, Pointer} = useContext(InboxContext)
+  const { user_data: {id, id_idioma} } = useContext(UserContext)
   const MessageDispatch = useContext(MessageDispatchContext)
   const { messages, loaded_messages_room } = useContext(MessageContext)
 
@@ -26,7 +26,7 @@ function MessageContainer() {
   useEffect(() => {
 
     if(isPointed && !isCachedMessages) {
-      socket.emit('messages:getMessagesByIdRoom', current_id_room)
+      socket.emit('messages:getMessagesByIdRoom', ({id_room: current_id_room, id_idioma  }))
       socket.on('messages:getMessagesByIdRoom', messages => {
         const data = { current_id_room, messages }
         getMessagesByIdRoom(MessageDispatch, data)

@@ -1,9 +1,9 @@
-function getInboxChatsByIdQuery(id) {
-    return `SELECT u1.*, u.username, u.displayName, u.id, u.photo_url FROM (SELECT p.id_room,
-        (SELECT COUNT(id) FROM messages WHERE id > p.id_lastest_messages AND p.id_room = id_room AND id_user != ${id} ) as counter,
-        (SELECT message FROM messages WHERE id_room = p.id_room ORDER BY id DESC LIMIT 1) AS message,
-        (SELECT id FROM messages WHERE id_room = p.id_room ORDER BY id DESC LIMIT 1) AS id_message,
-        (SELECT created_at FROM messages WHERE id_room = p.id_room ORDER BY id DESC LIMIT 1) AS created_at
+function getInboxChatsByIdQuery(id, id_idioma) {
+    return `SELECT u1.*, u.username, u.displayName, u.id, u.photo_url, u.id_idioma FROM (SELECT p.id_room,
+        (SELECT COUNT(id) FROM messages WHERE id > p.id_lastest_messages AND p.id_room = id_room AND id_user != ${id} AND id_idioma = ${id_idioma} ) as counter,
+        (SELECT message FROM messages WHERE id_room = p.id_room AND id_idioma = ${id_idioma} ORDER BY id DESC LIMIT 1) AS message,
+        (SELECT id FROM messages WHERE id_room = p.id_room AND id_idioma = ${id_idioma} ORDER BY id DESC LIMIT 1) AS id_message,
+        (SELECT created_at FROM messages WHERE id_room = p.id_room AND id_idioma = ${id_idioma} ORDER BY id DESC LIMIT 1) AS created_at
         FROM participants p
         WHERE id_user = ${id}) as u1
         INNER JOIN participants p
@@ -13,13 +13,13 @@ function getInboxChatsByIdQuery(id) {
         WHERE p.id_user != ${id}`
 }
 
-function getMessagesByIdRoomQuery(id_room) {
-    return `SELECT * FROM messages WHERE id_room = ${id_room}`
+function getMessagesByIdRoomQuery(id_room, id_idioma) {
+    return `SELECT * FROM messages WHERE id_room = ${id_room} AND id_idioma = ${id_idioma}`
 }
 
 function insertMessageQuery(body) {
-    const { message, id_user, id_room } = body
-    return `INSERT INTO messages (message, id_user, id_room) VALUES ("${message}", ${id_user}, ${id_room})`
+    const { message, id_user, id_room, id_idioma } = body
+    return `INSERT INTO messages (message, id_user, id_room, id_idioma) VALUES ("${message}", ${id_user}, ${id_room}, ${id_idioma})`
 }
 
 function LoginAuthQuery(username) {
@@ -43,7 +43,7 @@ export function AddContactQuery(body) {
 export const createRoomQuery = 'INSERT INTO rooms VALUES()'
 
 export function getContactsByIdQuery(id_user_adding) {
-    return `SELECT u.id, u.username, u.displayName, u.photo_url, p.id_room FROM users u
+    return `SELECT u.id, u.username, u.displayName, u.photo_url, u.id_idioma, p.id_room FROM users u
     INNER JOIN contacts c
     ON c.id_user_added = u.id
     INNER JOIN participants p
@@ -72,7 +72,7 @@ export function addParticipantsQuery(body) {
 
 export function authRegisterQuery({ username, password, displayName, photo_url, idioma}) {
 
-    return `INSERT INTO users(username, password, displayName, photo_url, idioma) VALUES ("${username}", "${password}", "${displayName}", "${photo_url}", "${idioma}")`
+    return `INSERT INTO users(username, password, displayName, photo_url, id_idioma) VALUES ("${username}", "${password}", "${displayName}", "${photo_url}", "${parseInt(idioma)}")`
 }
 
 export function generateNewNinboxQuery(id, id_room) {

@@ -32,7 +32,9 @@ export const RegisterAuthentication = async (req, res) => {
         const { username, password, displayName, idioma } = user
 
         const random_number = Math.floor(Math.random() * 478) + 1
-        const photo_url = `https://www.serebii.net/dungeonrescueteamdx/pokemon/${random_number}.png`
+        const final_string = random_number > 99 ? random_number : `0${random_number}`
+        
+        const photo_url = `https://www.serebii.net/dungeonrescueteamdx/pokemon/${final_string}.png`
 
         const respIsExistUser = await pool.query(`SELECT COUNT(id) as Counter FROM users WHERE username = "${username}"`)
         const isExistUser = respIsExistUser[0][0].Counter
