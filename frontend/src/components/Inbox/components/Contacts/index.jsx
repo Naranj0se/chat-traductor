@@ -23,7 +23,7 @@
             // value= {searchValue}
             // onChange = {onSearchValueChange}
           />
-          <ContactsContainer toggleContacts={toggleContacts} />
+          <ContactsContainer toggleContacts={toggleContacts} type={"contacts"}/>
           <div className="contacts-options">
             <div className='contacts-option hvr-skew-forward' onClick={toggleAddContacts}>
               <span className="material-symbols-outlined MenuIcon">

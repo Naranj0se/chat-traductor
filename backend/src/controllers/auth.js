@@ -1,6 +1,5 @@
 import { pool } from "../db.js"
-import { authRegisterQuery } from "../querys.js"
-import { LoginAuthQuery } from "../querys.js/"
+import { authRegisterQuery, LoginAuthQuery } from "../querys.js"
 
 export const LoginAuthentication = async (req, res) => {
     try {

@@ -4,7 +4,7 @@ import "./SideMenu.css"
 
 import { UserContext, UserDispatchContext } from '../../../../store/context/user/UserContext';
 
-function SideMenu({ isMenuOpen, toggleMenu, toggleContacts }) {
+function SideMenu({ isMenuOpen, toggleMenu, toggleContacts, toggleCreateGroup }) {
 
   const { user_data } = useContext(UserContext)
   const setUser = useContext(UserDispatchContext)
@@ -36,7 +36,7 @@ function SideMenu({ isMenuOpen, toggleMenu, toggleContacts }) {
             </span>
             <span className='MenuText'>Contactos</span>
           </div>
-          <div className='option hvr-skew-forward'>
+          <div className='option hvr-skew-forward' onClick={() => {toggleCreateGroup(); toggleMenu();}}>
             <span className="material-symbols-outlined MenuIcon">
               group_add
             </span>

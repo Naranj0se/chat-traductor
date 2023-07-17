@@ -104,7 +104,7 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
             </span>
             <span className='MenuText'>Cerrar</span>
           </div>
-        <div className="hvr-skew-forward" style={{background: "#312122"}} onClick={handleAdd}>
+        <div className="add-contact-button hvr-skew-forward" onClick={handleAdd}>
             <span className="material-symbols-outlined MenuIcon">
               person_add
             </span>

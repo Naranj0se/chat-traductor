@@ -140,3 +140,10 @@
 .add-disabled {
   display: none;
 }
+
+.add-contact-button{
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
+}
