@@ -1,4 +1,4 @@
-  import React, {useContext} from 'react';
+  import {React, useContext, useState, useEffect} from 'react';
   
   import { ContactsContainer } from "./ContactsContainer/ContactsContainer"
   import { UserContext } from '../../../../store/context/user/UserContext'
@@ -6,9 +6,19 @@
   import "./Contacts.css"
 
 
-  function Contacts({ isContactsOpen, toggleContacts, toggleAddContacts }) {
+  function Contacts({ isContactsOpen, toggleContacts, toggleAddContacts, toggleChatOpen }) {
   
     const { user_data } = useContext(UserContext)
+
+    const [searchContactValue, setSearchContactValue] = useState("");
+
+    const onSearchValueChange = (event) => {
+      setSearchContactValue(event.target.value);
+    }
+
+    useEffect(() => {
+      setSearchContactValue("")
+    }, [toggleContacts]);
 
     return (
       <div className={`contacts ${isContactsOpen ? 'open' : ''}`}>
@@ -20,10 +30,10 @@
           <input 
             className="contacts-search Search" 
             placeholder="Buscar" 
-            // value= {searchValue}
-            // onChange = {onSearchValueChange}
+            value= {searchContactValue}
+            onChange = {onSearchValueChange}
           />
-          <ContactsContainer toggleContacts={toggleContacts} type={"contacts"}/>
+          <ContactsContainer toggleContacts={toggleContacts} searchContactValue={searchContactValue} toggleChatOpen={toggleChatOpen} type={"contacts"}/>
           <div className="contacts-options">
             <div className='contacts-option hvr-skew-forward' onClick={toggleAddContacts}>
               <span className="material-symbols-outlined MenuIcon">

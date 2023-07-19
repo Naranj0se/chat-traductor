@@ -3,7 +3,7 @@ import './ListInbox.css'
 
 import useListInbox from './hooks/useListInbox'
 
-function ListInbox({ searchChatByTitle , searchValue }) {
+function ListInbox({ searchChatByTitle , searchValue, toggleChatOpen }) {
 
   const { listInbox } = useListInbox()
   const filteredListInbox = searchChatByTitle(listInbox)
@@ -23,7 +23,7 @@ function ListInbox({ searchChatByTitle , searchValue }) {
       return (
         <section className='chatsContainer'>
           <ul>
-            { filteredListInbox.filter(i => i.id_message === null).map(inbox => <InboxItem key={inbox.id_room} {...inbox}/>) }
+            { filteredListInbox.filter(i => i.id_message === null).map(inbox => <InboxItem toggleChatOpen={toggleChatOpen} key={inbox.id_room} {...inbox}/>) }
           </ul>
         </section>
       );
@@ -32,7 +32,7 @@ function ListInbox({ searchChatByTitle , searchValue }) {
     return (
       <section className='chatsContainer'>
         <ul>
-          { listInbox.filter(i => i.id_message !== null).map(inbox => <InboxItem key={inbox.id_room} {...inbox}/>) }
+          { listInbox.filter(i => i.id_message !== null).map(inbox => <InboxItem toggleChatOpen={toggleChatOpen} key={inbox.id_room} {...inbox}/>) }
         </ul>
       </section>
     );

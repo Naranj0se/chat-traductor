@@ -39,6 +39,13 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
 
   }, [searchUser])
 
+  useEffect(() => {
+
+    setSearchUser("")
+    setUserInfo({})
+  
+    }, [toggleAddContacts])
+
   const onSearchValueChange = (event) => {
     setSearchUser(event.target.value);
   }
@@ -63,12 +70,12 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
 
   const handleAdd = () => {
     if (Object.entries(userInfo).length === 0) return
-
+    
     const participants = {
       id_user_adding: id,  
       id_user_added: userInfo.id
     }
-
+    
     axios.post("http://localhost:4000/contacts", participants)
     .then(res => {
       if(res.data.status_code === "error") return
@@ -79,6 +86,7 @@ function AddContacts({ isAddContactsOpen, toggleAddContacts, toggleContacts }) {
       toggleContacts()
     })
     
+    toggleAddContacts()
   }
 
   return (

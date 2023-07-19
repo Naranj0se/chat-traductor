@@ -16,6 +16,8 @@ function CreateGroup({ toggleCreateGroup, isCreateGroupOpen }) {
   const [contactsToAdd, setContactsToAdd] = useState([]);
   console.log("contacts to ad: " + contactsToAdd)
 
+    console.log(formData.search)
+
   useEffect(() => {
     if (!isCreateGroupOpen) {
       setFormData(initialFormState);
@@ -26,6 +28,8 @@ function CreateGroup({ toggleCreateGroup, isCreateGroupOpen }) {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
+
+  
 
   return (
     <div className={`contacts ${isCreateGroupOpen ? 'open' : ''}`}>
@@ -45,10 +49,11 @@ function CreateGroup({ toggleCreateGroup, isCreateGroupOpen }) {
         <input
           className="contacts-search Search"
           placeholder="Buscar"
+          name="search"
           value={formData.search}
           onChange={handleChange}
         />
-        <ContactsContainer type={"group"} contactsToAdd={contactsToAdd} setContactsToAdd={setContactsToAdd} toggleCreateGroup={toggleCreateGroup}/>
+        <ContactsContainer type={"group"} contactsToAdd={contactsToAdd} setContactsToAdd={setContactsToAdd} toggleCreateGroup={toggleCreateGroup} formData={formData}/>
         <div className="contacts-options">
           <div className='contacts-option hvr-skew-forward' onClick={toggleCreateGroup}>
             <span className="material-symbols-outlined MenuIcon">

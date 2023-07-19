@@ -10,7 +10,7 @@ import { selectedInbox } from "../../../../../store/dispatch/InboxDispatch";
 
 export default function Contact(props) {
 
-  const { id, displayName, username, photo_url, id_room, toggleContacts, type, contactsToAdd, setContactsToAdd, toggleCreateGroup } = props
+  const { id, displayName, username, photo_url, id_room, toggleContacts, type, contactsToAdd, setContactsToAdd, toggleCreateGroup, toggleChatOpen } = props
 
   const { current_id_room } = useContext(InboxContext)
 //  const { user_data: { id }} = useContext(UserContext)
@@ -19,6 +19,8 @@ export default function Contact(props) {
 
   
   function handleClick() {
+    toggleChatOpen()
+
     if(!(current_id_room === id_room)) {
       selectedInbox(InboxDispatch, props)
     }

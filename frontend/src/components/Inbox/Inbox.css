@@ -1,7 +1,0 @@
-.inbox{
-  background-color: #f0f0f0;
-  width: 30%;
-  display: grid;
-  grid-template-rows: 70px 1fr;
-  max-height: 100vh;
-}

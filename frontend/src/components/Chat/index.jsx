@@ -3,12 +3,16 @@ import { ChatHeader } from "./components/ChatHeader";
 import { MessageContainer } from "./components/MessageContainer";
 import { ChatInput } from "./components/ChatInput";
 
-import "./Chat.css"
+import "../Display/Display.css"
 
-function Chat(){
+
+function Chat({isChatOpen, toggleChatOpen}){
+
+  
+
   return (
-    <div className="chat">
-      <ChatHeader/>
+    <div className={`${isChatOpen === true ? "chat-open" : "chat-closed"}`}>
+      <ChatHeader toggleChatOpen={toggleChatOpen}/>
       <MessageContainer />
       <ChatInput/>
     </div>
