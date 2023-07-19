@@ -23,7 +23,10 @@ app.use('/contacts', ContactsRoutes)
 app.use('/auth', AuthRoutes)
 
 const server = createServer(app).listen(port)
-const io = new SocketServer(server, { cors: { origin: "*"}})
+const io = new SocketServer(server, { cors: { 
+  origin: "*",
+  methods: ["GET", "POST"]
+}})
 
 
 io.use((socket, next) => {

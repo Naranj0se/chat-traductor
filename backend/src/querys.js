@@ -52,7 +52,7 @@ export function getContactsByIdQuery(id_user_adding) {
 }
 
 export function getContactByIdQuery(id_user_added, id_room) {
-    return `SELECT u.id, u.username, u.displayName, u.photo_url, p.id_room FROM users u
+    return `SELECT u.id, u.username, u.displayName, u.photo_url, p.id_room, u.id_idioma FROM users u
     INNER JOIN contacts c
     ON c.id_user_added = u.id
     INNER JOIN participants p
